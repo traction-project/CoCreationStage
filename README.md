@@ -10,7 +10,7 @@ client library [Orkestra library](https://github.com/tv-vicomtech/Orkestralib), 
 
 ## Documentation
 
-The documentation is available here: (https://traction-project.github.io/CoCreationStage)
+The documentation is available here: https://traction-project.github.io/CoCreationStage
 
 ## Development
 
