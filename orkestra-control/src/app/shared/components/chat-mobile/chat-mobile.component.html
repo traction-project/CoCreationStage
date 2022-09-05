@@ -1,0 +1,49 @@
+<!--<ng-chat #ngChatInstance [adapter]="adapter" [userId]="userId" [hideFriendsList]="true" [isViewportOnMobileEnabled]="true" [theme]="theme.Dark"></ng-chat>-->
+<button class="open dontShow" (click)="openChat()">
+    <svg width="100%" height="100%" version="1.1" viewBox="0 0 20 20" x="0px" y="0px" class="ScIconSVG-sc-1bgeryd-1 cMQeyU"><g><path d="M16 16V4h2v12h-2zM6 9l2.501-2.5-1.5-1.5-5 5 5 5 1.5-1.5-2.5-2.5h8V9H6z"></path></g></svg>
+</button>
+<div id="WrapperContent"class="wrapperContent">
+    <div id="divisor" Resizer class="divisor"></div>
+    <div class="chatContainer">
+        <div class="headerChat">
+            <button class="close" (click)="closeChat()">
+                <svg width="100%" height="100%" version="1.1" viewBox="0 0 20 20" x="0px" y="0px" class="ScIconSVG-sc-1bgeryd-1 cMQeyU"><g><path d="M16 16V4h2v12h-2zM6 9l2.501-2.5-1.5-1.5-5 5 5 5 1.5-1.5-2.5-2.5h8V9H6z"></path></g></svg>
+            </button>
+            <h2 class="titleChat">Chat</h2>
+    
+        </div>
+        <div class="messagesContianer">
+            <div class="listMessage">
+                <div *ngFor="let msg of actMsgs; let index = index" class="messages" [ngClass]="{'otherUserM': !isMe(msg) , 'userMessage': isMe(msg)  }">
+                    
+                    <div class="tail" >
+                        <span class="tail-in" [ngClass]="{'otherUserTail': !isMe(msg) , 'userTail': isMe(msg)  }">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 13" width="8" height="13"><path opacity=".13" fill="#0000000" d="M1.533 3.568L8 12.193V1H2.812C1.042 1 .474 2.156 1.533 3.568z"></path><path fill="currentColor" d="M1.533 2.568L8 11.193V0H2.812C1.042 0 .474 1.156 1.533 2.568z"></path></svg>
+                        </span>
+                    </div>
+                    <div  class="message" >
+                        <div class="author" *ngIf="!isMe(msg)">Admin</div>
+                        <div class="author" *ngIf="isMe(msg)">Me</div>
+                        <div>{{msg.split(':')[1]}}</div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+        <div class="wrapprerInput">
+            <div class="inputContainer">
+                <textarea maxlength="500" (keyup)="autoGrowTextZone($event)" (keydown)="onKeydownEvent($event)"  name="textarea" rows="1" placeholder="Write something here" class='inputText'></textarea>
+                <div class="wrapperButton">
+                    <div class="button-container">
+                        <button  type="button" class="btn btn-primary send-button" (click)=sendMessage($event)>
+                            Enviar
+                        </button>
+                    </div>
+                </div>
+                
+            </div>    
+        </div>
+        
+    </div>
+</div>
+

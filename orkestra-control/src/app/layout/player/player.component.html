@@ -1,0 +1,15 @@
+
+<app-top-bar>
+  <ng-container class="middle">
+    <span class="child" style="margin-right:20px;">
+      <a href="/template"><button class="border" mat-button  >{{'Back' | translate}}</button></a>
+    </span>
+    <span style="color:white"> <h1 i18n>{{'PLAYER' | translate}}</h1></span>
+  </ng-container>
+  
+  </app-top-bar>
+ 
+<div>
+<video id="video" controls muted autoplay style="width:62%;height:80vh;display: block;margin-left: auto;margin-right: auto;"></video>
+<p>Jitter Buffer Delay (default 0.15s):<input id="buffer" type="number" value="0" (change)="changeBuffer($event,value)"></p>
+</div>

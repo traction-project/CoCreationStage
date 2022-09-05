@@ -1,0 +1,40 @@
+
+<div class="container">
+    <h3 mat-dialog-title i18n>{{'Add new Show' | translate}}</h3>
+
+    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+
+      <div class="form">
+        <mat-form-field color="accent" >
+
+            <input matInput placeholder="{{'Name of Show' | translate}}" [(ngModel)]="data.name" name="id" required i18n-placeholder whitespace>
+
+        </mat-form-field>
+      </div>
+      <div class="form" >
+        <mat-form-field color="accent">
+          <input matInput placeholder="{{'Number of Rooms' | translate}}" [(ngModel)]="data.rooms" name="rooms" required i18n-placeholder>
+        </mat-form-field>
+      </div>
+
+      <div class="form" >
+        <mat-form-field color="accent">
+          <input matInput placeholder="{{'Numbers of scenes' | translate}}" [(ngModel)]="data.scenes" name="scenes" required >
+        </mat-form-field>
+      </div>
+    </form>
+
+      <div class="form" >
+
+          <!--<input type="checkbox"  class="example-margin" [(ngModel)]="data.remoteAudience" required>Remote Audience  -->
+
+
+      </div>
+
+
+
+      <div mat-dialog-actions>
+        <button mat-button [type]="submit" [disabled]="!formControl.valid"  [mat-dialog-close]="1" (click)="confirmAdd()" i18n>{{'Add' | translate}}</button>
+        <button mat-button (click)="onNoClick()" tabindex="-1" i18n>{{'Cancel' | translate}}</button>
+      </div>
+  </div>

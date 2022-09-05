@@ -1,0 +1,64 @@
+
+
+<app-top-bar #myTopBar>
+  <ng-container class="middle">
+  <span class="child">
+    <button class="border white" mat-button (click)="back()" i18n>{{'Back' | translate}}</button>
+    </span>
+    <span class="child">
+  <app-upload>
+  </app-upload>
+  </span>
+  <span class="child">
+<button class="border"  (click)="next()" mat-button i18n>{{'Next' | translate}}</button>
+</span>
+</ng-container>
+
+</app-top-bar>
+
+<div class="container">
+  
+  <div class="container mat-elevation-z8">
+
+ 
+
+    <mat-table #table [dataSource]="mediaFiles" matSort class="mat-cell" style="background-color:#bdbdbd !important;">
+     
+     
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header i18n>{{'Name' | translate}}</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+        
+      </ng-container> 
+   
+   
+  
+      <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef mat-sort-header i18n>Url</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.url}}</mat-cell>
+      </ng-container>
+  
+  
+      <!-- actions -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef i18n>
+        {{'Actions' | translate}}
+        </mat-header-cell>
+  
+        <mat-cell *matCellDef="let row; let i=index;">
+  
+          <button mat-icon-button color="accent" (click)="removeFile(row.name)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+      
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+  </div>
+  
+
+
+</div>

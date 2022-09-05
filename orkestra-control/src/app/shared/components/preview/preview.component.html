@@ -1,0 +1,67 @@
+<div class="container3 extcont">
+    <mat-tab-group class='roomstab' (selectedTabChange)="tabChanged($event)" >
+     <mat-tab *ngFor="let tab of this.rooms"  trackBy:trackByFunction [label]="tab.name">
+
+     </mat-tab>
+     <mat-tab disabled style="opacity: 1.0 !important;">
+      <ng-template mat-tab-label style="opacity: 1.0 !important;">
+        <span class="material-icons" (click)="muteAll()" *ngIf="muteall==true">
+          volume_off
+          </span>
+          <span class="material-icons" (click)="muteAll()" *ngIf="muteall==false">
+            volume_up
+            </span>
+            <span class="material-icons" (click)="playAll()" *ngIf="playall==false">
+              play_circle
+              </span>
+              <span class="material-icons" (click)="playAll()" *ngIf="playall==true">
+                pause_circle
+                </span>
+        </ng-template>
+      </mat-tab>
+   </mat-tab-group>
+
+
+   <div id="canvas" *ngIf="checkRooms()" >
+    <div style="width: 100%;">
+      <div *ngFor="let tab of this.rooms" id="{{tab.name}}" >
+      <div [hidden]="hideIt(tab.name)">
+        {{tab.tabName}}
+        <div class="flex">
+        <div *ngFor="let obj of tab.devices" class="objects1" style="color:white;" (click)="selectDevice(obj.name)"  >
+          <div class="text" style="color:#e0e0e0;" >{{obj.name}}
+          <iframe id="{{tab.name+'_'+obj.name}}" class="flexDevices" [src]="obj.url +'&preview=true' | safe" *ngIf="previewOn===true"></iframe>
+          <iframe id="{{tab.name+'_'+obj.name}}" class="flexDevices" src="https://www.grocio.in/images/No_image_available.jpg" *ngIf="previewOn===false" style="pointer-events:none;zoom:0.88;overflow:none;" (click)="selectDevice(obj.name)" ></iframe>
+
+
+
+            <!--<span (click)="changeLayout('Divided')"> <img width="50" src="./assets/images/divided.png"> Divided</span>
+            <span (click)="changeLayout('Mosaic')" ><img width="50" src="./assets/images/mosaic.png"> Mosaic</span>-->
+            <a href='{{obj.url}}' target="_blank">{{'Open Device' | translate}}</a>
+          </div>
+      </div>
+      </div>
+    </div>
+    </div>
+
+<!--    <div *ngFor="let obj of rooms[selectedRoom].cams" class="objects" cdkDrag cdkDragBoundary="#canvas" >
+
+        <span class="material-icons icon" style="color:black;">
+          videocam
+      </span>
+    <div class="text" style="color:black;">{{obj.name}} </div>
+    <div (click)="changeCameraName(obj.name)">
+      <span class="material-icons" style="color:black;">
+      create
+      </span>
+    </div>
+      <div (click)="deleteObject('cams',obj.name)">
+        <span class="material-icons" style="color:black;">
+        delete
+      </span>
+    </div>
+
+  </div>
+-->
+</div>
+   </div>

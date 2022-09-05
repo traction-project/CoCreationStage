@@ -1,0 +1,127 @@
+:host{
+width:1920px;
+height:1080px;
+}
+.container{
+
+}
+.main-container{
+  margin-top: 0px !important;
+  margin-left: 0px !important;
+  padding: 0px !important;
+
+
+}
+
+.chat-bubble{
+  padding: 10px;
+  background-color: #bdc3c7;
+  border-radius: 10px;
+  margin: 10px;
+  animation: appear 400ms;
+  color: #363636;
+  margin-left: 15px;
+}
+
+
+
+
+
+.msg-list{
+  padding-top: 30px;
+  /*overflow-y: scroll;*/
+  height: calc(100vh - 68px);
+  width:20%;
+  padding-bottom: 55px;
+  background-color: #E8E8E8; /*#F0F8FF;*/
+}
+
+.chat-bar{
+  background-color: #232B2D;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.me{
+  background-color: #007aff;
+  color: whitesmoke;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #008CBA;
+}
+
+.button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00BB';
+  position: absolute;
+  opacity: 0;
+  top: -30px;
+  right: -10px;
+  transition: 0.5s;
+  color:white;
+
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+option{
+  font-size: 16px;
+}
+#devices{
+    width:38%;
+    position:absolute;
+    left:21%;
+}

@@ -1,0 +1,210 @@
+
+<app-top-bar #myTopBar>
+  <ng-container class="middle">
+    <span style="color:white;flex:auto 1;"> <h1 i18n>{{'DEVLIST' | translate}}</h1></span>
+
+  <span class="child" style="margin-right:20px;">
+    <a href="/template"><button class="border" mat-button  >{{'Back' | translate}}</button></a>
+  </span>
+</ng-container>
+
+</app-top-bar>
+
+<div class="container-list-rooms">
+  <div class="room-list-container">
+      <div class="grid">
+        <div class="header-grid">
+          <div class="item-clickable ng-star-inserted">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="header-icon">games</mat-icon>
+          <span style="padding-left: 10px;"><a [routerLink]="['/mediac']" style="color:black !important" [queryParams]="{room: janusRoom,channel:showName,agentid:'mediac'}" queryParamsHandling="merge" > {{'Open media controller' | translate}} </a></span>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="container-list-rooms">
+  <div class="room-list-container">
+      <div class="grid">
+        <div class="header-grid">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" class="header-icon">devices</mat-icon>
+          <span>Salas</span>
+        </div>
+          <div *ngIf="(rooms)?.length==0" class="item"><span>No hay Salas</span></div>
+  
+          <div *ngFor="let room of rooms" class="item-clickable" (click)="showDevices(room)" style="display: block;">
+            <div class="row-two-items">
+              <p class="name-item">{{room.name}}</p>
+              <p class="numDev-item">{{room.devices.length}} Dispositivos</p>
+            </div> 
+            <div class="devices-list" id="devlist_{{room.name}}" style="display:none">
+              <div class="grid">
+                  <div class="cuerpo-header-grid">
+                      <div class="header-grid">
+                          <mat-icon aria-hidden="false" aria-label="Example home icon" class="header-icon">devices</mat-icon>
+                          <span>Dispositivos</span>
+                        </div>
+                  </div>
+                  <div class="cuerpo-item">
+                          <div *ngIf="(room.devices)?.length==0" class="item"><span>No hay dispositivos</span></div>
+              
+                          <div *ngFor="let disp of getRoomDevices(room)" class="item">
+                        
+                          <div class="buttons">
+                            <mat-icon  class="material-icons-outlined">
+                              monitor
+                              </mat-icon >
+                              <a href="{{disp.url}}" class="btn btn-primary action">
+                                {{ disp.name}}
+                              </a>
+                          </div>
+                      </div>
+                    </div>
+                     
+                </div>
+                <div class="grid">
+                  <div class="cuerpo-header-grid">
+                      <div class="header-grid">
+                          <mat-icon aria-hidden="false" aria-label="Example home icon" class="header-icon">devices</mat-icon>
+                          <span>Camaras</span>
+                      </div>
+                  </div>
+                    <div class="cuerpo-item">
+                          <div *ngIf="(room.cams)?.length==0" class="item"><span>No hay dispositivos Camara</span></div>
+                  
+                          <div *ngFor="let cam of room.cams" class="item">
+                             <div class="buttons">
+                              <mat-icon  class="material-icons-outlined">
+                                video_camera_front
+                                </mat-icon >
+                              <a href="{{cam.url}}"   class="btn btn-primary action">
+                                {{cam.name}}
+                              </a>
+                            </div>
+                            <div class="buttons">
+                              <mat-icon  class="material-icons-outlined">
+                                smart_display
+                                </mat-icon >
+                              <a [href]='getDeviceCamPlayer(room.name,cam,"cam")' class="btn btn-primary action">
+                                {{'Open Player' | translate}}
+                              </a>
+                              </div>
+                          </div>
+                    </div>
+                    
+                </div>
+                <div class="grid">
+                  <div class="cuerpo-header-grid">
+                      <div class="header-grid">
+                          <mat-icon aria-hidden="false" aria-label="Example home icon" class="header-icon">devices</mat-icon>
+                          <span>Audio</span>
+                      </div>
+                  </div>
+                  <div class="cuerpo-item">
+                      <div *ngIf="(room.audios)?.length==0" class="item"><span>No hay dispositivos de audio</span></div>
+                    <div *ngFor="let audio of room.audios" class="item">
+                     
+                      <div class="buttons">
+                        <mat-icon  class="material-icons-outlined">
+                          mic
+                          </mat-icon >
+                          <a href="{{audio.url}}"   class="btn btn-primary action">
+                            {{ audio.name}}
+                          </a>
+                       
+                      </div>
+                      <div class="buttons">
+                        <mat-icon  class="material-icons-outlined">
+                          smart_display
+                          </mat-icon >
+                      <a [href]='getDeviceCamPlayer(room.name,audio,"aud")'  class="btn btn-primary action">
+                        {{'Open Player' | translate}}
+                      </a>
+                      </div>
+                  </div>
+                  </div>
+                    
+                </div>
+                <div class="grid">
+                  <div class="cuerpo-header-grid">
+                      <div class="header-grid">
+                          <mat-icon aria-hidden="false" aria-label="Example home icon" class="header-icon">devices</mat-icon>
+                          <span>Disp&Cam</span>
+                      </div>
+                  </div>
+                  <div class="cuerpo-item">
+                    <div *ngIf="(getRoomCamDevices(room))?.length==0" class="item"><span>No hay dispositivos Disp&Cam</span></div>
+
+                    <ng-container  *ngFor="let disp of room.devices">
+                      <div class="item" *ngIf="deviceHasCam(disp)" >
+                        <ng-container *ngIf="deviceHasCam(disp)">
+                          
+                          <div class="buttons">
+                            <mat-icon  class="material-icons-outlined">
+                              mic
+                              </mat-icon >
+                              <mat-icon  class="material-icons-outlined">
+                                video_camera_front
+                                </mat-icon >
+                              <a href="{{disp.url}}"   class="btn btn-primary action">
+                                {{ disp.cam.name}}
+                              </a>
+                            </div>
+                            <div class="buttons">
+                              <mat-icon  class="material-icons-outlined">
+                                smart_display
+                                </mat-icon >
+                              <a [href]='getDeviceCamPlayer(room.name,disp.cam,"dc")'  class="btn btn-primary action">
+                                {{'Open Player' | translate}}
+                              </a>
+                        
+                          </div>
+                        </ng-container>
+                      </div>
+                      </ng-container>
+                 
+                      </div>
+                  </div>
+                  
+                </div>        
+            </div>
+          </div>
+        </div>
+</div>
+
+<!--<div>
+  <h2>{{'Media Controller' | translate}}</h2>
+  <table>
+    <tr>
+      <td>{{'Main' | translate}}</td>
+      <td><a [routerLink]="['/mediac']" [queryParams]="{room: janusRoom,channel:showName,agentid:'mediac'}" queryParamsHandling="merge" > {{'Open media controller' | translate}} </a></td>
+    </tr>
+  </table>
+  <div *ngFor='let r of rooms'>
+    <h2>{{r.name}}</h2>
+    <table>
+      <tr *ngFor='let d of r.devices'>
+        <td>{{d.name}}</td>
+        <td><a href='{{d.url}}' target="_blank">{{'Open Device' | translate}}</a></td>
+        <ng-container *ngIf="deviceHasCam(d)">
+             <td><a [href]='getDeviceCamPlayer(r.name,d.cam,"dc")' target="_blank">{{'Open Player' | translate}}</a></td>
+        </ng-container>
+      </tr>
+
+    </table>
+    <table>
+      <tr *ngFor='let c of r.cams'>
+        <td>{{c.name}}</td>
+        <td><a href='{{c.url}}' target="_blank">{{'Open Camera' | translate}}</a></td>
+        <td><a [href]='getDeviceCamPlayer(r.name,c,"cam")' target="_blank">{{'Open Player' | translate}}</a></td>
+      </tr>
+    </table>
+    <table>
+      <tr *ngFor='let a of r.audios'>
+        <td>{{a.name}}</td>
+        <td><a href='{{a.url}}'>{{'Open Microphone' | translate}}</a></td>
+        <td><a [href]='getDeviceCamPlayer(r.name,a,"aud")' target="_blank">{{'Open Player' | translate}}</a></td>
+
+      </tr>
+    </table>
+  </div>
+-->

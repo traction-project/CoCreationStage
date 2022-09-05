@@ -1,0 +1,39 @@
+:host{
+width:1920px;
+height:1080px;
+}
+.flex-container{
+  color:#e0e0e0 !important;
+  height:calc((100% - 96px)/2);
+  overflow: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.main-container{
+
+
+}
+.medias{
+  margin: 0 20px; 
+  color:#210303 !important;
+  flex-direction: row;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.medias:hover{
+  box-shadow:  4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.mcontainer{
+  position:relative;
+}
+.btn{
+  display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 2px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #1976d2;
+    color: #fff;
+    border: none;
+}

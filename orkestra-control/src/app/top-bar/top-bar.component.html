@@ -1,0 +1,29 @@
+
+
+<a href="/" style="flex:1 auto">
+  <img src='./assets/images/Traction_logo.png' style='width:150px;' >
+  
+</a>
+
+
+
+<ng-content select='.middle'></ng-content>
+<ng-container class="right" *ngIf="display">
+  <button mat-button [matMenuTriggerFor]="menu" cdkOverlayOrigin style="background-color: #252525;">
+      <mat-icon>settings</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" xPosition="before" yPosition="above" cdkConnectedOverlay>
+    <a mat-menu-item  (click)="locale('pt')">Português</a>
+    <a mat-menu-item  (click)="locale('en')">English</a>
+    <a mat-menu-item  (click)="locale('es')">Castellano</a>
+    <a mat-menu-item  (click)="locale('eus')">Euskera</a>
+    <a mat-menu-item  (click)="locale('cat')">Català</a>
+    <mat-divider></mat-divider>
+    <a mat-menu-item  (click)="logout()" i18n>{{'logout' | translate}}</a>
+  </mat-menu>
+  </ng-container>
+<!--
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+-->

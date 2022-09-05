@@ -1,0 +1,140 @@
+<app-top-bar #myTopBar>
+  <ng-container class="middle">
+  <span class="child" style="margin-right:20px;">
+    <a href="/template"><button class="border" mat-button  >{{'Back' | translate}}</button></a>
+  </span>
+  <span style="color:white"> {{name}}</span>
+</ng-container>
+
+</app-top-bar>
+
+
+<div class="container">
+  <div class='title' i18n> </div>
+  <div class="flex-container">
+    <ng-container *ngFor='let r of rooms'>
+      <ng-container *ngIf="!ifEmpty(r)">
+      <ng-container *ngFor="let d of r.devices" >
+         <div *ngIf="deviceHasCam(d)" class="mcontainer" >
+             <div class="medias"> 
+                 <span (click)='showConfig("videoWrap_dac_"+d.cam.name)'>
+                  <h2 style='font-weight: bold;'>{{r.name + "_" +d.cam.name}}<i class="fas fa-volume-mute" style='margin-bottom: 0px;' (click)="muteVideo($event,'dac_'+d.cam.name)"> </i></h2>
+                   <x-media class='vprev' style="width:400px;"  input='dac_{{d.cam.name}}' [config]="configCam"></x-media>
+                </span>
+              </div>       
+             <span id="videoWrap_dac_{{d.cam.name}}" class="medias" style='display:none;background-color: white;position:absolute;top:45px;left:5px;width:min-content;padding:20px;'>
+                
+                <form id='change_dev_form' class="form-inline"  [formGroup]="getFormControl(r.name + '_' +d.cam.name)" style="display:flex;">                          
+                 <div style="width:180px">
+                  <h2>{{'Options:' | translate}}</h2>
+                      EchoCancelation:<input type="checkbox"	id="echoC" formControlName="echoC"  style="margin-right:20px"><br/>
+                      NoiseSupression:<input type="checkbox" formControlName="noiseS"	id="noiseS"  style="margin-right:20px"><br/>
+                      GainControl:<input type="checkbox" formControlName="gainC"	  id="gainC"  style="margin-right:20px"><br/>
+                      Video:<input type="checkbox"	id="video"  formControlName="video"  style="margin-right:20px"><br/>
+                      Audio:<input type="checkbox"	formControlName="audio" id="audio"  style="margin-right:20px"><br/>
+                      Simulcast:<input type="checkbox"	id="simulcast" formControlName="simulcast"    style="margin-right:20px">
+                  </div>
+                      <div>
+                        <h2>Bitrate:</h2> <select  formControlName="bitrate" id="bitrate"   style="width:135px;">
+                          <option value="0">Disabled</option>
+                         <option value="250">250 kb/s</option>
+                         <option value="500">500 kb/s</option> 
+                         <option value="800">800 kb/s</option>
+                         <option value="1200">1200 kb/s</option>
+                         <option value="2000">2000 kb/s</option>  
+                        </select>
+                        <h2>Micro force:</h2> <input type="range" formControlName="volIncrease" id="volIncrease" value=0 min="0" max="5"  style="margin-right:20px">
+                      </div>                   
+            
+                </form>
+                <input type="button" value="Close" (click)='closeForm("videoWrap_dac_"+d.cam.name)' style="float:right;">
+              </span>
+      </div>
+
+    </ng-container>
+ 
+      </ng-container>
+  
+    <div *ngFor='let c of r.cams' >
+      <div  class="mcontainer">
+        <div class="medias">
+          <span (click)='showConfig("videoWrap_cam_"+r.name+"_"+c.name)'>
+            <h2 style='font-weight: bold;'>{{r.name + "_" +c.name}} <i class="fas fa-volume-mute" style='margin-bottom: 0px;' (click)="muteVideo($event,'cam_'+r.name +'_'+c.name)"></i></h2>
+            <x-media class='vprev' style="width:400px;"  input='cam_{{r.name +"_" +c.name}}' [config]="configCam"></x-media>
+            
+          </span>
+        </div>
+        <!-- <div>
+          <span>{{c.name}} <a target="_blanck" href="{{c.url}}"><span class="material-icons" >flight_takeoff</span></a></span>
+        </div> -->
+        <span id="videoWrap_cam_{{r.name}}_{{c.name}}" class="medias" style='display:none;background-color: white;position:absolute;top:45px;left:5px;width:min-content;padding:20px;'>
+          <form id='change_dev_form' class="form-inline" [formGroup]="getFormControl(r.name +'_' +c.name)" style="display:flex;">
+            <div style="width:180px">              
+            <h2> {{'Options:' | translate}}</h2>
+            EchoCancelation:<input type="checkbox"	id="echoC" formControlName="echoC"  style="margin-right:20px"><br/>
+            NoiseSupression:<input type="checkbox" formControlName="noiseS"	id="noiseS"  style="margin-right:20px"><br/>
+            GainControl:<input type="checkbox" formControlName="gainC"	  id="gainC"  style="margin-right:20px"><br/>
+            Video:<input type="checkbox"	id="video"  formControlName="video"  style="margin-right:20px"><br/>
+            Audio:<input type="checkbox"	formControlName="audio" id="audio"  style="margin-right:20px"><br/>
+            Simulcast:<input type="checkbox"	id="simulcast" formControlName="simulcast"    style="margin-right:20px">
+          </div>
+            <div>
+              <h2>Bitrate:</h2> <select  formControlName="bitrate" id="bitrate"   style="width:135px;">
+                <option value="0">Disabled</option>
+                <option value="250">250 kb/s</option>
+                <option value="500">500 kb/s</option> 
+                <option value="800">800 kb/s</option>
+                <option value="1200">1200 kb/s</option>
+                <option value="2000">2000 kb/s</option>  
+               </select>
+              <h2>Micro force:</h2> <input type="range" formControlName="volIncrease" id="volIncrease" value=0 min="0" max="5"  style="margin-right:20px">
+            </div>      
+          </form>
+          <input type="button" value="Close" (click)='closeForm("videoWrap_cam_"+r.name+"_"+c.name)' style="float:right;">
+           <!--<span style="float:right"><span id="saveB" class="btn btn-primary" (click)="update()"> Update </span></span>-->
+      </span>
+      </div>
+    </div>
+      <div *ngFor='let c of r.audios' >
+        <div  class="mcontainer">
+          <div class='medias'>
+            <span (click)='showConfig("videoWrap_aud_"+r.name+"_"+c.name)'>
+              <h2 style='font-weight: bold;'>{{r.name + "_" +c.name}} <i class="fas fa-volume-mute" style='margin-bottom: 0px;'  (click)="muteVideo($event,'_aud'+r.name +'_'+c.name)"></i></h2>
+              <x-media class='vprev' style="width:400px;"  input='_aud{{r.name + "_" +c.name}}' [config]="configCam"></x-media>
+            </span>
+          </div>
+          <!-- <div>
+            <span>{{c.name}} <a target="_blanck" href="{{c.url}}"><span class="material-icons" >flight_takeoff </span></a></span>
+    
+          </div> -->
+          <span  id="videoWrap_aud_{{r.name}}_{{c.name}}" class="medias" style='display:none;background-color: white;position:absolute;top:45px;left:5px;width:min-content;padding:20px;'>
+            <form id='change_dev_form' class="form-inline"  [formGroup]="getFormControl(r.name + '_' +c.name)" style="display:flex;">                            
+              <div style="width:180px">
+              <h2> {{'Options:' | translate}}</h2>
+              EchoCancelation:<input type="checkbox"	id="echoC" formControlName="echoC"  style="margin-right:20px"><br/>
+              NoiseSupression:<input type="checkbox" formControlName="noiseS"	id="noiseS"  style="margin-right:20px"><br/>
+              GainControl:<input type="checkbox" formControlName="gainC"	  id="gainC"  style="margin-right:20px"><br/>
+              Video:<input type="checkbox"	id="video"  formControlName="video"  style="margin-right:20px"><br/>
+              Audio:<input type="checkbox"	formControlName="audio" id="audio"  style="margin-right:20px"><br/>
+              Simulcast:<input type="checkbox"	id="simulcast" formControlName="simulcast"    style="margin-right:20px">
+            </div>
+              <div>
+                <h2>Bitrate:</h2> <select  formControlName="bitrate" id="bitrate"   style="width:135px;">
+                  <option value="0">Disabled</option>
+                  <option value="250">250 kb/s</option>
+                  <option value="500">500 kb/s</option> 
+                  <option value="800">800 kb/s</option>
+                  <option value="1200">1200 kb/s</option>
+                  <option value="2000">2000 kb/s</option>  
+                 </select>
+                <h2>Micro force:</h2> <input type="range" formControlName="volIncrease" id="volIncrease" value=0 min="0" max="5"  style="margin-right:20px">
+              </div>
+          </form>
+          <input type="button" value="Close" (click)='closeForm("videoWrap_aud_"+r.name+"_"+c.name)' style="float:right;">
+        </span>
+       </div>
+  </div>
+
+  </ng-container>
+  </div>
+</div>

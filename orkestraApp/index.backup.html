@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Orkestra Viewer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />      
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                font-family: sans-serif;
+                display:block;
+                overflow:hidden;
+
+            }
+	   #loading{
+                color: RoyalBlue;
+
+	    }
+            a {
+                color: RoyalBlue;
+            }
+            .results {
+                background-color: WhiteSmoke;
+                display: inline-block;
+                margin: 1rem 0;
+                padding: .5rem 1.5rem;
+                width: 100%;
+            }
+            #me_video{
+              display:none;
+              position:absolute;
+              width:200px;height:auto;
+              z-index:9999;
+              top:0px;left:0;
+              /*border: 1px solid red;*/
+            }
+            .floatingButton{
+              box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+              border-radius: 50%;
+              font-size: 24px;
+              background-color: #f44336;
+              width: 85px;
+              height: 85px;
+              z-index: 9999;
+              position: absolute;
+              top: 15px;
+              left: 90%;
+            }
+            :host{
+width:1920px;
+height:1080px;
+}
+.container{
+
+}
+#chatdiv{
+  position: absolute;
+    top: 0px;
+    left: 0vw;
+    display:none;
+    z-index: 999999;
+}
+.main-container{
+  margin-top: 0px !important;
+  margin-left: 0px !important;
+  padding: 0px !important;
+
+
+}
+
+.chat-bubble{
+  padding: 10px;
+  background-color: #bdc3c7;
+  border-radius: 10px;
+  margin: 10px;
+  animation: appear 400ms;
+  color: #363636;
+  margin-left: 15px;
+}
+
+
+
+
+
+.msg-list{
+  padding-top:7px;
+  /*overflow-y: scroll;*/
+  width:20%;
+  padding-bottom: 11px;
+  background-color: #E8E8E8; /*#F0F8FF;*/
+}
+
+.chat-bar{
+  background-color: #232B2D;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.me{
+  background-color: #007aff;
+  color: whitesmoke;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #008CBA;
+}
+
+.button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00BB';
+  position: absolute;
+  opacity: 0;
+  top: -30px;
+  right: -10px;
+  transition: 0.5s;
+  color:white;
+
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+option{
+  font-size: 16px;
+}
+#devices{
+    width:38%;
+    position:absolute;
+    left:8%;
+}
+
+        </style>
+    </head>
+    <body style="background-color: black;">
+      <tm-splash-screen
+      id="loadingPanel"
+      heading="Traction Reprodutor"
+      subheading="Please login"
+      start></tm-splash-screen>
+      <h2 id="loading">Carregando...</h2>
+      <orkestra-ui style='height:100vh;'>
+
+        <x-media id="v0" ></x-media>
+        <x-media id="v1" ></x-media>
+        <x-media id="v2" ></x-media>
+        <x-media id="v3" ></x-media>
+        <x-media id="v4" ></x-media>
+        <x-media id="v5" ></x-media>
+        <x-media id="v6" ></x-media>
+        <x-media id="v7" ></x-media>
+        <x-media id="v8" ></x-media>
+        <x-media id="v9" ></x-media>
+      </orkestra-ui>
+        <div id="me_video" type="webrtc">
+          <div class="row hide" id="devices">
+            <span id='circleNotShowing' style="height:10px;width:10px;background-color:red;border-radius:50%;position:absolute;z-index:999;top:10px;left:10px;"></span>
+            <span id='circleShowing' style="height:10px;width:10px;background-color:green;border-radius:50%;position:absolute;z-index:999;top:10px;left:10px;"></span>
+          <webrtc-publisher id="p">
+            </webrtc-publisher>
+            <span id='textShowing' style='color:white;position:absolute;top:55px;'> You are being shown at: <span id="showAt" style='display:inline-grid;'></span></span>
+            <span id='textNotShowing' style='color:white;position:absolute;top:55px;'> You are not being shown </span>
+
+        </div>
+        </div>
+         <i class="fas fa-video" id="publishButton" style="color:rgb(224, 64, 176);position: absolute;top:2%;left:83%;font-size: 50pt;z-index:98999;"></i>
+        <div id="chatdiv" class='msg-list' style='float: left;text-align: center;display: none;width: 25%; min-width: 250px;z-index:999999;left:0px;'>
+          <span style="float:left;padding-top: 0px;
+          padding-bottom: 5px;
+          padding-left: 4px;cursor: pointer;" id="closechat">X</span>
+          <span id="chatadmin">Chat with the admin</span>
+          <div style='height:100px;overflow-y:auto;width: 98%;background-color: rgb(29, 3, 3);margin-left: 1%;' id="chatbody">
+        
+          </div>
+          <input type="text" style="margin-left: 15px;margin-top:10px;" placeholder="Send message to admin" id="msg">
+          <i class="fas fa-paper-plane"  style='margin-left:10px' id="msgicon"></i>
+
+
+        </div>
+        <i class="fas fa-comments" style="color:turquoise;position: absolute;top:90%;left:80%;font-size: 50pt;display:none;" id="iconChat"></i>
+        <script src="app.js"></script>
+    </body>
+</html>

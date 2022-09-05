@@ -20,7 +20,7 @@ The documentation is available here: https://traction-project.github.io/CoCreati
 
 ```note
 
-By default clients are point to an Amaazon server, so there is not need to run server locally.
+By default clients are point to an Amazon server, so there is not need to run server locally.
 
 ```
 
@@ -35,3 +35,9 @@ Open http://localhost:4200
 
 * Orkestra-control [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestra-control/src/environments/environment.ts)
 * OrkestraApp [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestraApp/src/config/environmet.js)
+
+## RoadMap
+
+A spreadsheet with the current list of requirements which we used to specify the development plan is available [here](https://docs.google.com/spreadsheets/d/1U2GEB4njDMaD-rHioXpe94aZHqeWgJZ2OILTFniNNLY/edit#gid=1438711263)
+
+

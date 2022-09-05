@@ -1,0 +1,730 @@
+<div
+    #timelineCont
+    class="app-ve-frame-editor row"
+    style="width: 100%; margin: 0px !important; text-align: left"
+>
+    <ul class="app-ve-frame-editor-header col-sm-3">
+        <!--<li [ngClass]="{'app-ve-frame-editor-header-item':true,'objects':true}" (click)="changeActiveTimeline($event,'all')">Main Stream</li>-->
+        <!--<li *ngFor="let viewer of activeDevices" class="app-ve-frame-editor-header-item">
+     <div *ngIf='viewer.name==activeTimeline' style="backgroundColor:#353535"   (click)="changeActiveTimeline($event,viewer.name)">{{viewer.name}}</div>
+     <div *ngIf='viewer.name!=activeTimeline' style="backgroundColor:#555"  (click)="changeActiveTimeline($event,viewer.name)">{{viewer.name}}</div>
+    </li>-->
+    </ul>
+    <div style="marginleft: 420px; color: #e0e0e0">
+        <ng-container i18n> {{ "You are setting up" | translate }}</ng-container
+        ><span style="color: red"> {{ activeTimeline }} </span>
+        <ng-container i18n> {{ "at" | translate }} </ng-container>
+        <span style="color: red">{{ dataService.activeRoom }}</span>
+    </div>
+
+    <div class="app-ve-frame-editor-content">
+        <div class="app-ve-frame-editor-layers"></div>
+        <div class="app-ve-frame-editor-layers">
+            <ul class="app-ve-layers-toolbar">
+                <!--<span id="frame_init" class="app-ve-layers-toolbar-item app-ve-controls fa fa-fast-backward"></span>-->
+                <span
+                    id="frame_prev"
+                    class="
+                        app-ve-layers-toolbar-item app-ve-controls
+                        fa fa-step-backward
+                    "
+                    (click)="prevFrame()"
+                ></span>
+                <span
+                    id="play"
+                    class="app-ve-layers-toolbar-item app-ve-controls icon fas"
+                    [ngClass]="{
+                        'fa-play': paused() === true,
+                        'fa-pause': paused() === false
+                    }"
+                ></span>
+                <!--<span id="play" class="app-ve-layers-toolbar-item app-ve-controls icon fas" [ngClass]="{'fa-play': paused()===true,'fa-pause': paused()===false}" (click)="this.play()"></span>-->
+                <!--<div id="stop" class="app-ve-control icon fa fa-stop"></div>-->
+                <span
+                    id="frame_next"
+                    class="
+                        app-ve-layers-toolbar-item app-ve-controls
+                        fa fa-step-forward
+                    "
+                    (click)="nextFrame()"
+                ></span>
+                <!--<span id="frame_end" class="app-ve-layers-toolbar-item app-ve-controls fa fa-fast-forward"></span>-->
+                <span #frameCounter class="frameCounter"
+                    ><ng-container i18n>{{ "Scene" | translate }}</ng-container>
+                    0</span
+                >
+                <span  class="frameCounter" alt="config transitions"  title="config transitions" (click)="openTransitionModal()"><img style="float:right;margin-right:20px;margin-top:5px;width:20px;cursor:pointer;" src="./assets/images/transitions_on.png" /></span>
+                <span class='material-icons' alt="copy config of components"  title="copy config of components" style="cursor:pointer;color:white;float:right;margin-right:10px;margin-top:3px;width:20px;" (click)="openCopyComponents()">copy_all</span>        
+
+                <!--<li class="app-ve-layers-toolbar-item add" title="Close selection">
+          <span class="fa fa-times"></span>
+        </li>
+
+
+        <li class="app-ve-layers-toolbar-item remove" title="Delete selected objects">
+          <span class="fa fa-trash-o"></span>
+        </li>
+
+        <i class="app-ve-layers-toolbar-item fa fa-cubes" aria-hidden="true" (click)="chooseLayout()"></i>
+        <i class="app-ve-layers-toolbar-item fa fa-mouse-pointer" aria-hidden="true" title="Select annotations"></i>
+        <li class="app-ve-layers-toolbar-item add" (click)="sendTimeline()" title="Save">
+          <span class="fa fa-save"></span>
+        </li>
+        <li class="app-ve-layers-toolbar-item add" (click)="addComponent()" title="Add Component">
+          <span class="fa fa-plus"></span>
+        </li>-->
+            </ul>
+
+            <div #layerList class="app-ve-layers-list">
+                <div
+                    *ngFor="let n of objNum; let i = index"
+                    class="app-ve-layers-list-item"
+                >
+                    <div
+                        style="color: #e0e0e0 !important"
+                        [ngClass]="{ 'list-item-even': i % 2 == 0 }"
+                    >
+                        <select
+                            id="source_{{ n }}"
+                            (change)="sourceChanged($event)"
+                            style="color: black; margin-left: 20px"
+                        >
+                            <option value=""></option>
+
+                            <option
+                                *ngFor="let c of showCams"
+                                [selected]="componentSelectValue(c, n, 'cam')"
+                                value="cam_{{ c.id }}"
+                            >
+                                {{ c.id }}
+                            </option>
+                            <option
+                                *ngFor="let v of multimedia"
+                                [selected]="componentSelectValue(v, n, 'm')"
+                                value="{{ v.url }}"
+                            >
+                                {{ v.name.substr(0, 8) }}
+                            </option>
+                            <option
+                                *ngFor="let a of audios"
+                                [selected]="componentSelectValue(a, n, 'a')"
+                                value="aud_{{ a.id }}"
+                            >
+                                {{ a.id }}
+                            </option>
+                            <option
+                                *ngFor="let dc of deviceCam"
+                                [selected]="
+                                    componentSelectValue(dc, n, 'DeviceAndCam')
+                                "
+
+                                value="dac_{{ dc.name }}"
+
+                            >
+                                {{ dc.name }}
+                            </option>
+                        </select>
+                        <!--<i *ngIf='isMuted(n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmute(n,activeTimeline)'></i>
+            <i *ngIf='!isMuted(n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='mute(n,activeTimeline)'></i>
+            <span class="fa fa-trash-alt" style='margin-left:10px;' (click)="removeComponent(n)"></span>-->
+                    </div>
+                </div>
+                <div class="app-ve-layers-list-add">
+                    <button (click)="addLayer()" class="small-button">+</button>
+                </div>
+                <div class="app-ve-layers-list-item">
+                    <div style="color: #e0e0e0 !important">
+                        No Signal Image<select
+                            id="noSignal"
+                            (change)="changeNoSignalMedia($event)"
+                            style="color: black; margin-left: 20px"
+                        >
+                            <option value=""></option>
+                            <option
+                                *ngFor="let v of images"
+                                value="{{ v.url }}"
+                                [selected]="checkNoSignal(v.url)"
+                            >
+                                {{ v.name.substr(0, 8) }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="app-ve-controls stop"></div>
+        </div>
+
+        <div #viewport class="app-ve-frame-editor-viewport">
+            <div #pane class="app-ve-viewport-pane" style="height: 312px; width: 3750px"></div>
+        </div>
+
+        <div class="app-ve-frame-editor-timeline">
+            <header class="app-ve-timeline-header">
+                <div
+                    *ngFor="let n of viewFrames"
+                    class="app-ve-timeline-header-frame"
+                    (click)="goto(n)"
+                ><div *ngIf="fr!=n" style="opacity: 30%;">
+                    <div
+                        *ngIf="n % 5 === 0"
+                        class="app-ve-timeline-header-frame-label"
+                    >
+                        <ng-container i18n>
+                            {{ "Scene" | translate }}</ng-container
+                        >
+                        {{ n }}
+                        <img
+                            [src]="loadIcon(n)"
+                            class="layouticon"
+                            (click)="changeLayout(n)"
+                            style="margin-left: 8px"
+                        />
+                    </div>
+                    <div
+                        *ngIf="n % 5 !== 0"
+                        class="app-ve-timeline-header-frame-label"
+                    >
+                        <ng-container i18n>
+                            {{ "Scene" | translate }}</ng-container
+                        >
+                        {{ n }}
+                        <img
+                            [src]="loadIcon(n)"
+                            class="layouticon"
+                            (click)="changeLayout(n)"
+                            style="margin-left: 8px"
+                        />
+                    </div>
+                    <div class="app-ve-timeline-header-frame-mark"></div>
+                    <img style="position: absolute;top: 8px;left: 0%;width:20px;" [src]="loadTransitionsIcon(n)" (click)="addTransition(n)"/>
+                </div>
+                <div *ngIf="fr==n" style="background-color:red;color:white;border-top:3px solid red;border-left:3px solid red; border-right: 3px solid red; height:30px;">
+                    <div
+                        *ngIf="n % 5 === 0"
+                        class="app-ve-timeline-header-frame-label"
+                    >
+                        <ng-container i18n>
+                            {{ "Scene" | translate }}</ng-container
+                        >
+                        {{ n }}
+                        <img
+                            [src]="loadIcon(n)"
+                            class="layouticon"
+                            (click)="changeLayout(n)"
+                            style="margin-left: 8px"
+                        />
+                    </div>
+                    <div
+                        *ngIf="n % 5 !== 0"
+                        class="app-ve-timeline-header-frame-label"
+                    >
+                        <ng-container i18n>
+                            {{ "Scene" | translate }}</ng-container
+                        >
+                        {{ n }}
+                        <img
+                            [src]="loadIcon(n)"
+                            class="layouticon"
+                            (click)="changeLayout(n)"
+                            style="margin-left: 8px"
+                        />
+                    </div>
+                    <div class="app-ve-timeline-header-frame-mark"></div>
+                    <img style="position: absolute;top: 8px;left: 0%;width:20px;" [src]="loadTransitionsIcon(n)" (click)="addTransition(n)"/>
+                </div>
+                </div>
+            </header>
+
+            <div #timelineList class="app-ve-timeline-list">
+                <div>
+                    <div
+                        *ngFor="let obj of objInTimeline; let i = index"
+                        class="app-ve-timeline-item"
+                    >
+                        <div>
+                            <div
+                                *ngFor="let n of viewFrames; index as j"
+                                class="app-ve-timeline-frame"
+                                [ngClass]="{ 'list-item-even': i % 2 == 0 }"
+                            >
+                            <div *ngIf="fr==n && i!=objInTimeline.length-1" style="border-right:3px solid red;border-left:3px solid red;">
+                                <div
+                                    id="component_{{ obj }}_{{ n }}"
+                                    (click)="statusChanged($event, n)"
+                                    *ngIf="!checkStatus(i, n)"
+                                    style="width: 100px; height: 24px; "
+                                ></div>
+                                <div
+                                    id="component_{{ obj }}_{{ n }}"
+                                    (click)="statusChanged($event, n)"
+                                    *ngIf="checkStatus(i, n)"
+                                    style="width: 93px; height: 24px;"
+                                    [style.backgroundColor]="
+                                        componentsStatus[
+                                            dataService.activeRoom
+                                        ][activeTimeline].components[i].color
+                                    "
+                                >
+                                    <i
+                                        *ngIf="
+                                            isMutedScene(
+                                                obj,
+                                                n,
+                                                activeTimeline
+                                            ) &&
+                                            isNotImg(obj, n, activeTimeline)
+                                        "
+                                        class="fas fa-volume-mute"
+                                        style="margin-left: 10px"
+                                        (click)="
+                                            unmuteScene(obj, n, activeTimeline)
+                                        "
+                                    ></i>                                    
+                                    <i
+                                        *ngIf="
+                                            !isMutedScene(
+                                                obj,
+                                                n,
+                                                activeTimeline
+                                            ) &&
+                                            isNotImg(obj, n, activeTimeline)
+                                        "
+                                        class="fas fa-volume-up"
+                                        style="margin-left: 10px"
+                                        (click)="
+                                            muteScene(obj, n, activeTimeline)
+                                        "
+                                    ></i>
+                                    <i
+                                        *ngIf="isDash(obj,n,activeTimeline) && !isLoopVideo(obj,n,activeTimeline)"             
+                                        class="fas fa-ban"
+                                        style="margin-left: 10px"
+                                        (click)="activateLoop(obj, n, activeTimeline)"
+                                                    
+                                    ></i>
+                                    <i
+                                        *ngIf="isDash(obj,n,activeTimeline) && isLoopVideo(obj,n,activeTimeline)"
+                                        class="fas fa-history"
+                                        style="margin-left: 10px"
+                                        (click)="deactivateLoop(obj, n, activeTimeline)"
+                                                    
+                                    ></i>
+                                    <select
+                                        name="orders_{{ obj }}_{{ n }}"
+                                        [(ngModel)]="
+                                            componentsStatus[
+                                                dataService.activeRoom
+                                            ][activeTimeline].components[i]
+                                                .order[n]
+                                        "
+                                        (change)="
+                                            updateOrder(
+                                                $event,
+                                                componentsStatus[
+                                                    dataService.activeRoom
+                                                ][activeTimeline].components[i],
+                                                n
+                                            )
+                                        "
+                                        style="
+                                            margin-left: 5%;
+                                            margin-top: 1.4%;
+                                            font-size: small;
+                                        "
+                                    >
+                                        <option
+                                            [value]="order"
+                                            *ngFor="let order of orderList"
+                                        >
+                                            {{ order }}
+                                        </option>
+                                    </select>
+                                    <!--<i style="margin-left:60%;cursor: pointer;" class="fas" (click)="changeOrder($event,componentsStatus[dataService.activeRoom][activeTimeline].components[i],n)">{{componentsStatus[dataService.activeRoom][activeTimeline].components[i].order[n] || n}}</i>-->
+                                </div>
+                                
+                                <!--<div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadEndIf(i,n)'  style='width:100px;height:24px;' >
+                  <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+                  <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+                </div>
+                <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadEndIf(i,n)'   [style.backgroundColor] = "" style='width:100px;height:24px;' >
+                  <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+                  <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+                </div>
+                <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mousedown)='leftSpreadInit($event)'*ngIf='leftSpreadInitIf(i,n)'    style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+                  <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+                  <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+                </div>
+                <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)"   (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadIf(i,n)'   style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+                  <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+                  <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+                </div>
+                <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mousedown)='rightSpreadInit($event)' *ngIf='rightSpreadInitIf(i,n)'   style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+                  <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+                  <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+                </div>
+
+                <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" *ngIf='initIf(i,n)'    style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color'>
+                  <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+                  <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+                </div>-->
+                </div>
+                <div *ngIf="fr==n && i==objInTimeline.length-1" style="border-bottom:3px solid red;border-right:3px solid red;border-left:3px solid red;">
+                    <div
+                        id="component_{{ obj }}_{{ n }}"
+                        (click)="statusChanged($event, n)"
+                        *ngIf="!checkStatus(i, n)"
+                        style="width: 100px; height: 24px; "
+                    ></div>
+                    <div
+                        id="component_{{ obj }}_{{ n }}"
+                        (click)="statusChanged($event, n)"
+                        *ngIf="checkStatus(i, n)"
+                        style="width: 93px; height: 24px;"
+                        [style.backgroundColor]="
+                            componentsStatus[
+                                dataService.activeRoom
+                            ][activeTimeline].components[i].color
+                        "
+                    >
+                        <i
+                            *ngIf="
+                                isMutedScene(
+                                    obj,
+                                    n,
+                                    activeTimeline
+                                ) &&
+                                isNotImg(obj, n, activeTimeline)
+                            "
+                            class="fas fa-volume-mute"
+                            style="margin-left: 10px"
+                            (click)="
+                                unmuteScene(obj, n, activeTimeline)
+                            "
+                        ></i>                        
+                        <i
+                            *ngIf="
+                                !isMutedScene(
+                                    obj,
+                                    n,
+                                    activeTimeline
+                                ) &&
+                                isNotImg(obj, n, activeTimeline)
+                            "
+                            class="fas fa-volume-up"
+                            style="margin-left: 10px"
+                            (click)="
+                                muteScene(obj, n, activeTimeline)
+                            "
+                        ></i>
+                        <i
+                            *ngIf="isDash(obj,n,activeTimeline) && !isLoopVideo(obj,n,activeTimeline)"             
+                            class="fas fa-ban"
+                            style="margin-left: 10px"
+                            (click)="activateLoop(obj, n, activeTimeline)"
+                                        
+                        ></i>
+                        <i
+                            *ngIf="isDash(obj,n,activeTimeline) && isLoopVideo(obj,n,activeTimeline)"
+                            class="fas fa-history"
+                            style="margin-left: 10px"
+                            (click)="deactivateLoop(obj, n, activeTimeline)"
+                                        
+                        ></i>
+                        <select
+                            name="orders_{{ obj }}_{{ n }}"
+                            [(ngModel)]="
+                                componentsStatus[
+                                    dataService.activeRoom
+                                ][activeTimeline].components[i]
+                                    .order[n]
+                            "
+                            (change)="
+                                updateOrder(
+                                    $event,
+                                    componentsStatus[
+                                        dataService.activeRoom
+                                    ][activeTimeline].components[i],
+                                    n
+                                )
+                            "
+                            style="
+                                margin-left: 5%;
+                                margin-top: 1.4%;
+                                font-size: small;
+                            "
+                        >
+                            <option
+                                [value]="order"
+                                *ngFor="let order of orderList"
+                            >
+                                {{ order }}
+                            </option>
+                        </select>
+                        <!--<i style="margin-left:60%;cursor: pointer;" class="fas" (click)="changeOrder($event,componentsStatus[dataService.activeRoom][activeTimeline].components[i],n)">{{componentsStatus[dataService.activeRoom][activeTimeline].components[i].order[n] || n}}</i>-->
+                    </div>
+                    
+                    <!--<div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadEndIf(i,n)'  style='width:100px;height:24px;' >
+      <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+      <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+    </div>
+    <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadEndIf(i,n)'   [style.backgroundColor] = "" style='width:100px;height:24px;' >
+      <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+      <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+    </div>
+    <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mousedown)='leftSpreadInit($event)'*ngIf='leftSpreadInitIf(i,n)'    style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+      <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+      <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+    </div>
+    <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)"   (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadIf(i,n)'   style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+      <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+      <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+    </div>
+    <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mousedown)='rightSpreadInit($event)' *ngIf='rightSpreadInitIf(i,n)'   style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+      <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+      <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+    </div>
+
+    <div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" *ngIf='initIf(i,n)'    style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color'>
+      <i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+      <i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+    </div>-->
+    </div>
+    <div *ngIf="fr!=n" style="opacity: 20%;">
+        <div
+            id="component_{{ obj }}_{{ n }}"
+            (click)="statusChanged($event, n)"
+            *ngIf="!checkStatus(i, n)"
+            style="width: 100px; height: 24px; "
+        ></div>
+        <div
+            id="component_{{ obj }}_{{ n }}"
+            (click)="statusChanged($event, n)"
+            *ngIf="checkStatus(i, n)"
+            style="width: 100px; height: 24px;"
+            [style.backgroundColor]="
+                componentsStatus[
+                    dataService.activeRoom
+                ][activeTimeline].components[i].color
+            "
+        >
+            <i
+                *ngIf="
+                    isMutedScene(
+                        obj,
+                        n,
+                        activeTimeline
+                    ) &&
+                    isNotImg(obj, n, activeTimeline)
+                "
+                class="fas fa-volume-mute"
+                style="margin-left: 10px"
+                (click)="
+                    unmuteScene(obj, n, activeTimeline)
+                "
+            ></i>
+            <i
+                *ngIf="
+                    !isMutedScene(
+                        obj,
+                        n,
+                        activeTimeline
+                    ) &&
+                    isNotImg(obj, n, activeTimeline)
+                "
+                class="fas fa-volume-up"
+                style="margin-left: 10px"
+                (click)="
+                    muteScene(obj, n, activeTimeline)
+                "
+            ></i>
+            <i
+                *ngIf="isDash(obj,n,activeTimeline) && !isLoopVideo(obj,n,activeTimeline)"             
+                class="fas fa-ban"
+                style="margin-left: 10px"
+                (click)="activateLoop(obj, n, activeTimeline)"
+                            
+            ></i>
+            <i
+                *ngIf="isDash(obj,n,activeTimeline) && isLoopVideo(obj,n,activeTimeline)"
+                class="fas fa-history"
+                style="margin-left: 10px"
+                (click)="deactivateLoop(obj, n, activeTimeline)"
+                            
+            ></i>
+            <select
+                name="orders_{{ obj }}_{{ n }}"
+                [(ngModel)]="
+                    componentsStatus[
+                        dataService.activeRoom
+                    ][activeTimeline].components[i]
+                        .order[n]
+                "
+                (change)="
+                    updateOrder(
+                        $event,
+                        componentsStatus[
+                            dataService.activeRoom
+                        ][activeTimeline].components[i],
+                        n
+                    )
+                "
+                style="
+                    margin-left: 5%;
+                    margin-top: 1.4%;
+                    font-size: small;
+                "
+            >
+                <option
+                    [value]="order"
+                    *ngFor="let order of orderList"
+                >
+                    {{ order }}
+                </option>
+            </select>
+            <!--<i style="margin-left:60%;cursor: pointer;" class="fas" (click)="changeOrder($event,componentsStatus[dataService.activeRoom][activeTimeline].components[i],n)">{{componentsStatus[dataService.activeRoom][activeTimeline].components[i].order[n] || n}}</i>-->
+        </div>
+        
+        <!--<div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadEndIf(i,n)'  style='width:100px;height:24px;' >
+<i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+<i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+</div>
+<div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadEndIf(i,n)'   [style.backgroundColor] = "" style='width:100px;height:24px;' >
+<i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+<i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+</div>
+<div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mousedown)='leftSpreadInit($event)'*ngIf='leftSpreadInitIf(i,n)'    style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+<i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+<i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+</div>
+<div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)"   (mouseup)='spreadEnd($event)' (mouseover)='changeColorTemp($event)' *ngIf='spreadIf(i,n)'   style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+<i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+<i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+</div>
+<div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" (mousedown)='rightSpreadInit($event)' *ngIf='rightSpreadInitIf(i,n)'   style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color' >
+<i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+<i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+</div>
+
+<div id='component_{{obj}}_{{n}}' (click)="statusChanged($event)" *ngIf='initIf(i,n)'    style='width:100px;height:24px;' [style.backgroundColor]='componentsStatus[dataService.activeRoom][activeTimeline].components[i].color'>
+<i *ngIf='isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-up" style='margin-left:10px;' (click)='unmuteScene(obj,n,activeTimeline)'></i>
+<i *ngIf='!isMutedScene(obj,n,activeTimeline)' class="fas fa-volume-mute" style='margin-left:10px;' (click)='muteScene(obj,n,activeTimeline)'></i>
+</div>-->
+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--<div
+                    #marker
+                    class="app-ve-timeline-current"
+                    draggable=""
+                    style="position: absolute; left: 0px"
+                >
+                    <div class="app-ve-timeline-current-box"></div>
+                    <div class="app-ve-timeline-current-line"></div>
+                </div>-->
+                <footer class="app-ve-timeline-footer">
+                    <div
+                        *ngFor="let n of viewFrames"
+                        class="app-ve-timeline-header-frame"
+                        (click)="goto(n)"
+                    >
+                        <div
+                            *ngIf="n % 5 === 0"
+                            class="app-ve-timeline-header-frame-label"
+                        >
+                            <i
+                                class="fas fa-trash-alt"
+                                style="margin-left: 3px; color: #e0e0e0"
+                                (click)="deleteScene(n)"
+                            ></i
+                            ><i
+                                style="margin-left: 3px; color: #e0e0e0"
+                                class="fas fa-plus-square"
+                                (click)="addSceneRight(n)"
+                            ></i>
+                        </div>
+                        <div
+                            *ngIf="n % 5 !== 0"
+                            class="app-ve-timeline-header-frame-label"
+                        >
+                            <i
+                                class="fas fa-trash-alt"
+                                style="margin-left: 3px; color: #e0e0e0"
+                                (click)="deleteScene(n)"
+                            ></i
+                            ><i
+                                style="margin-left: 3px; color: #e0e0e0"
+                                class="fas fa-plus-square"
+                                (click)="addSceneRight(n)"
+                            ></i>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <div
+        contextmenu="mymenu"
+        *ngIf="componentContextMenu"
+        [ngStyle]="menuMargins"
+    >
+        <div type="context" id="componentContextMenu">
+            <h4
+                style="
+                    background-color: #777;
+                    border: 1px solid #999;
+                    text-align: center;
+                    margin-top: 0px;
+                "
+                i18n
+            >
+                {{ "Setup" | translate }}
+            </h4>
+            <div style="backgroundcolor: #d0d6d1; height: 100px; width: 140px">
+                <label class="switch" *ngIf="slotStatus">
+                    <input
+                        type="checkbox"
+                        style="display: block"
+                        checked
+                        (change)="statusChanged($event)"
+                    />
+                    <span class="slider round"></span>
+                </label>
+                <label class="switch" *ngIf="!slotStatus">
+                    <input
+                        type="checkbox"
+                        style="display: block"
+                        (change)="statusChanged($event)"
+                    />
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!--
+<div contextmenu="mymenu" *ngIf="lockContextMenu" [ngStyle] = 'menuMargins'>
+  <div type="context" id="lockContextMenu" >
+    <h4 style="background-color:#777;border:1px solid #999;text-align:center;margin-top:0px;">Update</h4>
+    <div  class="removeFramesMenu" style="padding:8px" label="Refresh" icon="ico_reload.png" (click)="dataService.setAnnDynamicAttrState(clickedAnn,clickedAttr,clickedFrame)">Lock/UnLock</div>
+  </div>
+</div>
+
+<div contextmenu="mymenu" *ngIf="addContextMenu" [ngStyle] = 'menuMargins'>
+  <div type="context" id="addContextmenu" >
+    <h4 style="background-color:#777;border:1px solid #999;text-align:center;margin-top:0px;">Menu</h4>
+    <div  class="removeFramesMenu" style="padding:8px" label="Refresh" icon="ico_reload.png" (click)="dataService.updateIntervalsByFr(clickedAnn,clickedFrame,'bwd')">New interval</div>
+    <div class="removeFramesMenu" style="border-top:1px solid #666;padding:8px" label="Email This Page" (click)="dataService.lockUnlockFrames(clickedAnn,clickedFrame)">Lock/Unlock</div>
+  </div>
+
+  <div contextmenu="mymenu" *ngIf="selectContextMenu" [ngStyle] = 'menuMargins'>
+    <div type="context" id="selectContextmenu" >
+      <h4 style="background-color:#777;border:1px solid #999;text-align:center;margin-top:0px;">Menu</h4>
+      <div  class="removeFramesMenu" style="padding:8px" label="Refresh" icon="ico_reload.png">Lock</div>
+    </div>
+  </div>
+  -->
+</div>

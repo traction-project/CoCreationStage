@@ -1,0 +1,75 @@
+<router-outlet></router-outlet>
+
+<app-top-bar #myTopBar>
+
+
+</app-top-bar>
+
+<div class="container">
+  <button id="create" mat-button (click)="createTemplate()" i18n>{{'Create Show' | translate}}</button>
+
+</div>
+<div class="container mat-elevation-z8">
+
+
+
+  <mat-table #table [dataSource]="dataSource" matSort class="mat-cell" style="background-color:#bdbdbd !important;">
+
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header i18n>{{'Name' | translate}}</mat-header-cell>
+      <mat-cell *matCellDef="let row">      
+        <a (click)='goToShow(row.name)' style="padding-right:15px;">{{row.name}} </a>
+        <mat-icon aria-label="Edit" style="cursor: pointer;" (click)="renameTemplate(row.name)">edit</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+
+
+   <ng-container matColumnDef="numberOfRooms">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Numbers Of Rooms' | translate}}</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.numberOfRooms}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="numberOfScenes">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Numbers Of Scenes' | translate}}</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.scenes}}</mat-cell>
+    </ng-container>
+
+
+    <!-- actions -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef i18n>
+      {{'Actions' | translate }}
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" (click)="goToShow(row.name)" *ngIf="mobile!=true">
+          <mat-icon aria-label="Control">play_arrow</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="goToShowWithoutPreviews(row.name)" *ngIf="mobile!=true">
+          <mat-icon aria-label="Control-not-preview">double_arrow</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="editTemplate(row.name)"  *ngIf="mobile!=true">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+       
+        <button mat-icon-button color="accent" (click)="copyTemplate(row.name)"  *ngIf="mobile!=true">
+          <mat-icon aria-label="Duplicate">file_copy</mat-icon>
+        </button>
+        <button mat-icon-button color="accent" (click)="deleteItem(row.name)" *ngIf="mobile!=true">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+
+        <button mat-icon-button style='margin-top:0px;height:40px;' (click)="seeDevList(row.name)">
+          <mat-icon aria-label="devices">devices</mat-icon>
+        </button>
+
+
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+</div>

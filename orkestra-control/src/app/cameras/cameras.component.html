@@ -1,0 +1,20 @@
+<div style='text-align:center;font-weight:bold;'>Media Resources</div>
+<div>Add Media <span class="fa fa-plus" (click)="openModal()" title="Add Camera"></span></div>
+
+<div class="flex-container">
+  <div *ngFor='let c of camerasList' >
+
+    <div class="medias">
+      <x-media class="left" id="{{c.id}}" input="{{c.url}}" type="{{c.type}}" [style.backgroundColor]='c.color' style='width:"150px"'>
+
+      </x-media>
+      <div>
+      <div style='width:20px;height:20px;' >
+
+      </div>
+      <div style='margin-left:auto;'>Camera {{c.name}}</div>
+      <span style='margin-left:auto;' class="fa fa-trash-alt" (click)="removeCamera(c)"></span>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+
+
+/*
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at http://angular.io/license
+*/
+.child {
+    display: inline-block;
+    background: blue;
+    margin: 10px 0 0 2%;
+    flex-grow: 1;
+    height: 100px;
+    width: calc(100% * (1/4) - 10px - 1px);
+}
+@media  (max-width:  420px) {
+    .title {
+        font-size:10px;
+    }
+    img {
+        max-width: 80px;
+    }
+    
+        
+}

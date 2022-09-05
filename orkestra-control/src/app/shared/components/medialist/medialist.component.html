@@ -1,0 +1,83 @@
+<div class='extcont'>
+<div class='title_mediaList' i18n> {{'MEDIA' | translate}} </div>
+<div class="flex-container">
+  <div *ngFor='let m of mmedia' class='medias'>
+    <table>
+      <tr>
+        <td><x-media class='vprev' style="width:250px;"  input='{{getImageFromDashVideo(m.url)}}' [config]="config"></x-media></td>
+      </tr>
+      <tr>
+        <td><div>{{m.name}}</div></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class='title_mediaList' i18n> {{'CAMERAS' | translate}} </div>
+<div class="flex-container">
+  <ng-container *ngFor='let r of rooms'>
+    <div class="title_mediaList" style="display: inline-block;
+    height: 43px;
+    width: 100%;background: #ab6813;">Room:{{r.name}}</div>
+    <div *ngIf="notCameras(r)" style="text-align: center;align-content: center; width: 100%; margin-top: 12px;">-- No cameras -- </div>
+    <ng-container *ngFor="let d of r.devices">
+    <table *ngIf="deviceHasCam(d)" style="margin-top:11px;">
+      <tr>
+        <td><div><a  (click)='openNoSignalDialog("dac_"+ d.cam.name)'><span class="material-icons">
+          video_settings
+          </span></a>
+          </div></td>
+            
+      </tr>
+      <tr>
+        <td><x-media class='vprev' style="width:150px;"  input='dac_{{d.cam.name}}' [config]="configCam"></x-media></td>
+      </tr>
+      <tr>
+        <td><div style="margin-top:9px;">{{d.cam.name}}</div></td>
+        
+      </tr>
+    </table>
+  </ng-container>
+
+    <div *ngFor='let c of r.cams' class='medias'>
+    <table>
+      <tr>
+        <td><div><a  (click)='openNoSignalDialog("cam_"+r.name+"_"+c.name)'><span class="material-icons">
+          video_settings
+          </span></a>
+          </div></td>
+            
+      </tr>
+      <tr>
+        <td><x-media class='vprev' style="width:150px;"  input='cam_{{r.name+"_"+c.name}}' [config]="configCam"></x-media></td>
+      </tr>
+      <tr>
+        <td><div>{{c.name}} <a target="_blanck" href="{{c.url}}"><span class="material-icons" >
+flight_takeoff
+</span></a>
+</div>
+
+</td>
+
+      </tr>
+    </table>
+  </div>
+    <div *ngFor='let c of r.audios' class='medias'>
+      <table>
+        <tr><td><div><a  (click)='openNoSignalDialog("aud_"+r.name+"_"+c.name)'><span class="material-icons">
+          video_settings
+          </span></a>
+          </div></td></tr>
+        <tr>
+          <td><x-media class='vprev' style="width:150px;"  input='aud_{{r.name+"_"+c.name}}' [config]="configCam"></x-media></td>
+        </tr>
+        <tr>
+          <td><div>{{c.name}} <a target="_blanck" href="{{c.url}}"><span class="material-icons" >
+  flight_takeoff
+  </span></a>
+  </div></td> 
+        </tr>
+      </table>
+
+  </div>
+</ng-container>
+</div>

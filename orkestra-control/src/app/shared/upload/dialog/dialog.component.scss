@@ -1,0 +1,21 @@
+.add-files-btn {
+  float: right;
+}
+
+:host {
+  height: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  color:black;
+}
+
+.actions {
+  justify-content: flex-end;
+}
+
+.container2 {
+  height: 100%;
+  background:#1976d2 !important;
+  color:white;
+}

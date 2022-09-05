@@ -1,0 +1,11 @@
+# Dependencies
+node_modules
+
+# Static files
+dist
+bin
+public
+orkestraApp/css
+
+# OrkestraApp static files
+orkestra-control/src/traction

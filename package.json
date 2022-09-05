@@ -1,0 +1,49 @@
+{
+  "name": "co-creation-stage",
+  "version": "1.0.0",
+  "sideEffects": false,
+  "description": "Co-Creation Stage application",
+  "engines": {
+    "node": ">=14.18.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build:local",
+    "start:watch": "npm run build:watch & node ./bin/backend.js",
+    "build": "npm run build:orkestraApp && npm run build:control",
+    "build:dev": "npm run build:orkestraApp && npm run build:control:dev",
+    "build:orkestraApp": "webpack --mode production && cd orkestraApp && npm run build-css && cp -r css ../public/traction/",
+    "build:control": "cd orkestra-control && npm run build && cd ..",
+    "build:control:dev": "cd orkestra-control && npm run build:dev && cd ..",
+    "build:local": "cd orkestraApp && npm i && npm run builddev && cd ../orkestra-control && npm i && npm start",
+    "build:watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tv-vicomtech/traction_RealTimePerformanceEngine.git"
+  },
+  "author": "itamayo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tv-vicomtech/traction_RealTimePerformanceEngine/issues"
+  },
+  "homepage": "https://github.com/tv-vicomtech/traction_RealTimePerformanceEngine#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.2.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.28.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-node-externals": "^2.5.2",
+    "html-webpack-plugin": "5.3.0",
+    "terser-webpack-plugin": "4.2.3",
+    "copy-webpack-plugin": "8.1.1"
+  }
+}

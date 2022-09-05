@@ -1,0 +1,49 @@
+<app-top-bar (recordEvent)="onRecordEvent($event)" #myTopBar>
+  <ng-container class="middle">
+    <span [hidden]="showShareIcons" style="color: white"
+      >{{ "Send" | translate
+      }}<mat-icon
+        id="record"
+        aria-label="ViewOnly"
+        style="position: relative; top: 5px; color: white; cursor: pointer"
+        >fiber_manual_record</mat-icon
+      ></span
+    >
+    <span [hidden]="showShareIcons" style="color: white" id="sharedData">
+      {{ "Share" | translate
+      }}<mat-icon
+        style="color: white; cursor: pointer; position: relative; top: 5px"
+        (click)="myTopBar.copyToMem()"
+        >share</mat-icon
+      ></span
+    >
+  </ng-container>
+</app-top-bar>
+
+<div class="container">
+  <!--<cameras style='width:25%; position:absolute;'></cameras>-->
+  <medialist></medialist>
+  <preview
+    [rooms]="this.rooms"
+    [previewOn]="this.previewOn"
+    class="flexDevices"
+    (change)="muteChanges($event)"
+    (playAllChange)="playAll($event)"
+  ></preview>
+  <!--<actors style='width:25%; position:absolute;left:25%;' ></actors>-->
+  <!--<viewers  style='width:25%; position:absolute;left:50%;'></viewers>-->
+
+  <timeline></timeline>
+  <screen-share
+    input="controllerScreen"
+    [config]="janusConfig"
+    options='{"bitrate":500000,"simulcast":true}'
+  ></screen-share>
+</div>
+<ng-chat
+  [adapter]="adapter"
+  [userId]="userId"
+  [title]="title"
+  [theme]="themeAct"
+  [pollFriendsList]="true"
+></ng-chat>

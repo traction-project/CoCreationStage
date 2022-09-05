@@ -1,0 +1,193 @@
+<app-top-bar #myTopBar>
+    <ng-container class="middle">
+        <span class="child">
+            <button class="border" mat-button (click)="back()" i18n>
+                {{ "Back" | translate }}
+            </button>
+        </span>
+        <span class="child" i18n>{{ "Config Rooms" | translate }}</span>
+        <span class="child">
+            <button class="border" (click)="next()" mat-button i18n>
+                {{ "Next" | translate }}
+            </button>
+        </span>
+    </ng-container>
+</app-top-bar>
+
+<div class="container3">
+    <mat-tab-group
+        #tabGroup
+        (selectedTabChange)="tabChanged($event)"
+        style="color: black !important"
+    >
+        <mat-tab *ngFor="let tab of this.rooms" [label]="tab.name">
+            <ng-template mat-tab-label>
+                <span style="margin-right: 15px">{{ tab.name }}</span>
+                <span
+                    class="material-icons icon"
+                    (click)="changeTabName(tab.name)"
+                >
+                    create
+                </span>
+                <span
+                    class="material-icons icon"
+                    (click)="deleteRoom(tab.name)"
+                >
+                    delete
+                </span>
+            </ng-template>
+
+            <div class="tools">
+                <button (click)="addDevice()">
+                    <div>
+                        <span class="material-icons icon">
+                            personal_video
+                        </span>
+                        <div class="text" i18n>
+                            {{ "Add Device" | translate }}
+                        </div>
+                    </div>
+                </button>
+
+                <hr class="divider" />
+
+                <button (click)="addCamera()">
+                    <div>
+                        <span class="material-icons icon"> videocam </span>
+                        <div class="text" i18n>
+                            {{ "Add Camera" | translate }}
+                        </div>
+                    </div>
+                </button>
+
+                <hr class="divider" />
+
+                <button (click)="addAudio()">
+                    <div>
+                        <span class="material-icons icon"> mic </span>
+                        <div class="text">{{ "Add Audio" | translate }}</div>
+                    </div>
+                </button>
+
+                <hr class="divider" />
+
+                <button (click)="addDeviceWithCam()">
+                    <div>
+                        <span class="material-icons icon">
+                            personal_video
+                        </span>
+                        <span class="material-icons icon"> videocam </span>
+                        <div class="text">
+                            {{ "Add Device&Cam" | translate }}
+                        </div>
+                    </div>
+                </button>
+
+                <hr class="divider" />
+            </div>
+            <div id="canvas">
+                <div
+                    *ngFor="let obj of rooms[activeRoom].devices"
+                    class="objects"
+                    style="color: black; width: 290px"
+                    (cdkDragStarted)="dragging(obj)"
+                    (cdkDragEnded)="dragMoved($event)"
+                    cdkDrag
+                    cdkDragBoundary="#canvas"
+                    id="{{ obj.id }}"
+                >
+                    <span class="material-icons icon" style="color: black">
+                        personal_video
+                    </span>
+                    <span
+                        *ngIf="isCamExists(obj)"
+                        class="material-icons icon"
+                        style="color: black"
+                    >
+                        videocam
+                    </span>
+                    <div class="text" style="color: black">{{ obj.name }}</div>
+                    <div
+                        *ngIf="!isCamExists(obj)"
+                        (click)="changeDeviceName(obj.name)"
+                    >
+                        <span class="material-icons" style="color: black">
+                            create
+                        </span>
+                    </div>
+                    <div
+                        *ngIf="isCamExists(obj)"
+                        (click)="changeDeviceCamName(obj.name)"
+                    >
+                        <span class="material-icons" style="color: black">
+                            create
+                        </span>
+                    </div>
+                    <div (click)="deleteObject('device', obj.name)">
+                        <span class="material-icons" style="color: black">
+                            delete
+                        </span>
+                    </div>
+                </div>
+                <div
+                    *ngFor="let obj of rooms[activeRoom].cams"
+                    class="objects"
+                    (cdkDragStarted)="dragging(obj)"
+                    (cdkDragEnded)="dragMoved($event)"
+                    cdkDrag
+                    cdkDragBoundary="#canvas"
+                    id="{{ obj.id }}"
+                >
+                    <span class="material-icons icon" style="color: black">
+                        videocam
+                    </span>
+
+                    <div class="text" style="color: black">{{ obj.name }}</div>
+                    <div (click)="changeCameraName(obj.name)">
+                        <span class="material-icons" style="color: black">
+                            create
+                        </span>
+                    </div>
+                    <div (click)="deleteObject('cams', obj.name)">
+                        <span class="material-icons" style="color: black">
+                            delete
+                        </span>
+                    </div>
+                </div>
+                <div
+                    *ngFor="let obj of rooms[activeRoom].audios"
+                    class="objects"
+                    (cdkDragStarted)="dragging(obj)"
+                    (cdkDragEnded)="dragMoved($event)"
+                    cdkDrag
+                    cdkDragBoundary="#canvas"
+                    id="{{ obj.id }}"
+                >
+                    <span class="material-icons icon" style="color: black">
+                        mic
+                    </span>
+                    <div class="text" style="color: black">{{ obj.name }}</div>
+                    <div (click)="changeAudioName(obj.name)">
+                        <span class="material-icons" style="color: black">
+                            create
+                        </span>
+                    </div>
+                    <div (click)="deleteObject('audios', obj.name)">
+                        <span class="material-icons" style="color: black">
+                            delete
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab disabled style="opacity: 1 !important">
+            <ng-template mat-tab-label style="opacity: 1 !important">
+                <button mat-icon-button (click)="addRoom()">
+                    <span class="material-icons" style="color: black">
+                        add
+                    </span>
+                </button>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

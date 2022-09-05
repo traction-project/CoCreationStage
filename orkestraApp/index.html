@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8" />
+		<title>Orkestra Viewer</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/app.css"/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+			integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+			crossorigin="anonymous"
+		/>
+	</head>
+	<body>
+		<div class="hero min-h-screen bg-white" id="splashScreen">
+			<div class="text-center hero-content">
+				<div class="max-w-md">
+					<h1
+						class="mb-5 text-3xl text-black font-bold"
+						id="splashScreenHeader"
+					>
+						Traction Reproductor
+					</h1>
+					<button class="btn" id="splashScreenButton"></button>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class="
+				shadow
+				bg-black
+				drawer drawer-mobile drawer-end
+				h-screen
+				max-h-screen
+			"
+			id="app"
+			style="display: none"
+		>
+			<input id="my-drawer" type="checkbox" class="drawer-toggle" />
+			<button
+				class="btn btn-lg btn-ghost loading text-blue-600 absolute"
+				id="loading"
+			>
+				Loading...
+			</button>
+			<div
+				class="flex flex-col items-center justify-center drawer-content"
+			>
+				<div id="orkestra-app" class="h-screen w-full	overflow-hidden">
+					<orkestra-ui>
+						<x-media id="v0"></x-media>
+						<x-media id="v1"></x-media>
+						<x-media id="v2"></x-media>
+						<x-media id="v3"></x-media>
+						<x-media id="v4"></x-media>
+						<x-media id="v5"></x-media>
+						<x-media id="v6"></x-media>
+						<x-media id="v7"></x-media>
+						<x-media id="v8"></x-media>
+						<x-media id="v9"></x-media>
+					</orkestra-ui>
+				</div>
+				<label
+					for="my-drawer"
+					class="
+						btn btn-circle btn-accent
+						drawer-button
+						lg:hidden
+						absolute
+						top-2
+						right-2
+					"
+					id="camPreviewButton"
+				>
+					<i class="fas fa-video fa-lg"></i>
+				</label>
+				<label
+					for="my-drawer"
+					class="
+						btn btn-circle btn-accent
+						drawer-button
+						lg:hidden
+						absolute
+						bottom-2
+						right-2
+					"
+					id="chatAdminButton"
+				>
+					<i class="fas fa-comments fa-lg"></i>
+				</label>
+			</div>
+			<div class="drawer-side">
+				<label for="my-drawer" class="drawer-overlay"></label>
+				<div
+					id="drawer-inside"
+					class="
+						grid grid-rows-3 grid-flow-col
+						gap-2
+						py-8
+						pr-2
+						w-80
+						overflow-y-auto
+					"
+				>
+					<div id="camPreview">
+						<div class="card bg-gray-500 h-full max-h-full w-full">
+							<div class="card-body">
+								<div
+									id="me_video"
+									type="webrtc"
+									style="display: none"
+								>
+									<div>
+										<span
+											id="circleNotShowing"
+											style="
+												height: 10px;
+												width: 10px;
+												background-color: red;
+												border-radius: 50%;
+												position: absolute;
+												z-index: 999;
+												top: 10px;
+												left: 10px;
+											"
+										></span>
+										<span
+											id="circleShowing"
+											style="
+												height: 10px;
+												width: 10px;
+												background-color: green;
+												border-radius: 50%;
+												position: absolute;
+												z-index: 999;
+												top: 10px;
+												left: 10px;
+											"
+										></span>
+										<webrtc-publisher id="p">
+										</webrtc-publisher>
+									</div>
+								</div>
+								<div id="showing" class="absolute bottom-2 left-2" style="display: none;">
+									<span
+										id="textShowing"
+										class="text-white inline-grid"
+									>
+										You are being shown at:
+									</span>
+									<span
+										id="textNotShowing"
+										class="text-white inline-grid"
+									>
+										You are not being shown
+									</span>
+									<div
+										id="showAt"
+										class="inline-flex space-x-2 w-5/12 overflow-x-auto pb-1.5"
+									></div>
+								</div>
+								<button
+									class="
+										btn btn-circle btn-accent
+										absolute
+										bottom-2
+										right-2
+									"
+									id="publishButton"
+									disabled
+								>
+									<i
+										class="fas fa-video"
+										id="publishButtonIcon"
+									></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="row-start-2 row-span-2" id="chat">
+						<div class="card bg-gray-500 h-full max-h-full">
+							<div
+								class="
+									card-title
+									text-center text-lg text-gray-300
+								"
+							>
+								<span id="chatadmin"> Chat with admin </span>
+							</div>
+							<div class="card-body py-2 overflow-y-auto">
+								<div
+									id="chatbody"
+									class="bg-gray-700 flex-1 rounded-md"
+								></div>
+							</div>
+							<div class="card-actions pl-5 last:mt-0">
+								<div class="form-control w-full m-3">
+									<div class="flex space-x-2">
+										<input
+											type="text"
+											placeholder="Send message to admin"
+											class="w-full input input-bordered"
+											id="msg"
+										/>
+										<button
+											class="btn btn-circle btn-accent"
+											id="msgicon"
+											disabled
+										>
+											<i class="fas fa-paper-plane"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="app.js"></script>
+	</body>
+
+</html>
