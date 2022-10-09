@@ -2,12 +2,8 @@ import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { DataService } from 'src/app/shared/services/data.service';
 import { RtspCam } from 'src/app/shared/models/rtspCam.class';
 import {MatSelectionList, MatSelectionListChange, MAT_DIALOG_DATA} from '@angular/material';
-import {SafePipe} from '../../pipes/safe';
 import { MatDialogRef } from '@angular/material/dialog';
-import { JetsonService } from '../../services/jetson.service';
 import { YTService } from '../../services/yt.service';
-import { environment } from 'src/environments/environment';
-import { trigger } from '@angular/animations';
 import { Room } from '../../models/room.class';
 import { Show } from '../../models/show.class';
 
@@ -62,7 +58,7 @@ export class ModalComponent implements OnInit {
   service:any;
   images:any = [];
   nosignalImage:any;
-  constructor(public elem:ElementRef,public dialogRef: MatDialogRef<ModalComponent>,public dataService:DataService,public ytService:YTService,private jetsonService:JetsonService,@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public elem:ElementRef,public dialogRef: MatDialogRef<ModalComponent>,public dataService:DataService,public ytService:YTService,@Inject(MAT_DIALOG_DATA) public data: any) {
       
       console.log(this.camList);
       this.rcam = new RtspCam("","");
@@ -203,8 +199,7 @@ export class ModalComponent implements OnInit {
     this.dialogRef.close(null);
   }
   remove(name:string){
-    this.jetsonService.deleteFromName(name);
-    setTimeout(()=>{this.updateList();},2000);
+   
   }
 
 }
