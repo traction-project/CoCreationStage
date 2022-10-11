@@ -3,7 +3,7 @@ import { DataService } from 'src/app/shared/services/data.service';
 import { RtspCam } from 'src/app/shared/models/rtspCam.class';
 import {MatSelectionList, MatSelectionListChange, MAT_DIALOG_DATA} from '@angular/material';
 import { MatDialogRef } from '@angular/material/dialog';
-import { YTService } from '../../services/yt.service';
+//import { YTService } from '../../services/yt.service';
 import { Room } from '../../models/room.class';
 import { Show } from '../../models/show.class';
 
@@ -58,7 +58,7 @@ export class ModalComponent implements OnInit {
   service:any;
   images:any = [];
   nosignalImage:any;
-  constructor(public elem:ElementRef,public dialogRef: MatDialogRef<ModalComponent>,public dataService:DataService,public ytService:YTService,@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public elem:ElementRef,public dialogRef: MatDialogRef<ModalComponent>,public dataService:DataService,/*public ytService:YTService,*/@Inject(MAT_DIALOG_DATA) public data: any) {
       
       console.log(this.camList);
       this.rcam = new RtspCam("","");
@@ -168,29 +168,29 @@ export class ModalComponent implements OnInit {
   }
 
   startYT (){
-      clearInterval(this.statusLoop);
-      this.ytService.setConfig(this.ykey,this.ytUrl).then(response => response.text())
-      .then(result => {
-        this.ytService.start();
-        setTimeout(()=>{this.ytPlayerUrl += "&update=1";},10000);
-        console.log(result)
-      })
-      .catch(error => console.log('error', error));;
+      // clearInterval(this.statusLoop);
+      // this.ytService.setConfig(this.ykey,this.ytUrl).then(response => response.text())
+      // .then(result => {
+      //   this.ytService.start();
+      //   setTimeout(()=>{this.ytPlayerUrl += "&update=1";},10000);
+      //   console.log(result)
+      // })
+      // .catch(error => console.log('error', error));;
       
-      this.statusLoop = setInterval(()=>{
-          this.ytService.status().then(response => response.text()).then((txt)=>{
-              this.elem.nativeElement.querySelector('#status').value=txt;
-          }).catch((er)=>{
-            console.error(er);
-          })
-      },2000);
+      // this.statusLoop = setInterval(()=>{
+      //     this.ytService.status().then(response => response.text()).then((txt)=>{
+      //         this.elem.nativeElement.querySelector('#status').value=txt;
+      //     }).catch((er)=>{
+      //       console.error(er);
+      //     })
+      // },2000);
   }
   stopYT (){
-    this.ytService.stop();
-    setTimeout(()=>{
+    // this.ytService.stop();
+    // setTimeout(()=>{
      
-      clearInterval(this.statusLoop);
-    },4000)
+    //   clearInterval(this.statusLoop);
+    // },4000)
   }
   saveYT (){
     /* cookies */

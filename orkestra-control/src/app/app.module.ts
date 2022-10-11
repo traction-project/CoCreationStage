@@ -20,7 +20,6 @@ import { DBService } from './shared/services/db.service';
 import { UploadService } from './shared/upload/upload.service';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { SafePipe } from './shared/pipes/safe';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -53,8 +52,9 @@ export function createTranslateLoader(http: HttpClient) {
   })
     ],
   declarations: [
-    AppComponent,ModalComponent,SafePipe
+    AppComponent,ModalComponent
   ],
+  exports:[],
   providers:[
     DataService,
     DBService,
