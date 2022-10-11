@@ -1,0 +1,58 @@
+version: '3'
+ 
+services:
+    mongo:
+       image: mongo
+       ports:
+        - "27017:27017"
+    reverseproxy:
+        image: servers_reverseproxy
+        ports:
+            - 443:443
+            - 80:80
+            - 8082:8082
+            - 8080:8080
+        restart: always
+    static:
+            image: servers_static
+            volumes: 
+                - ./static/app:/var/www/html
+            ports:
+                - "8081:8081"
+            environment:
+                PORT: 8081
+            depends_on:
+                - reverseproxy
+            restart: always
+    motion:
+        image: servers_motion
+        depends_on:
+            - reverseproxy
+        restart: always
+        environment:
+           NODE_ENV: production
+           USE_HTTPS: "false"
+
+    orkestraserver:
+        image: servers_orkestraserver
+        depends_on:
+            - mongo
+            - reverseproxy
+        restart: always
+        environment:
+           NODE_ENV: production
+           USE_HTTPS: "false"
+           DOMAIN_MONGO: mongo
+           DBNAME: orkestra
+           PORT: 8082
+    janus:
+      image: quay.io/vicomtech/traction:janus
+      command: ["/opt/janus/bin/janus", "--nat-1-1=192.168.1.136","--full-trickle"]
+      volumes:
+        - "./cert:/opt/janus/share/janus/certs"
+      ports:
+            - 8089:8089
+            - 8989:8989
+
+
+
