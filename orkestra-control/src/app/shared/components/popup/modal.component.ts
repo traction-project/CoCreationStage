@@ -27,9 +27,9 @@ export class ModalComponent implements OnInit {
   userSelected:any;
   sub_mode: any;
   ytPlayerUrl:string = "https://player.twitch.tv/?channel=tamaxx__&parent=localhost";
-  ykey:string="live_769503280_OvrzeoJuVlcLkX3TngH8xf8VGw3s9b";
+  ykey:string="";
   ytlog:string = "";
-  ytserver:string= "18.200.88.210";
+  ytserver:string= "";
   ytUrl:string="rtmp://mad01.contribute.live-video.net/app";
   statusLoop:any;
   devices:any = [];
@@ -44,13 +44,13 @@ export class ModalComponent implements OnInit {
     name:"Twitch",
     url:"rtmp://mad01.contribute.live-video.net/app",
     embeded:"https://player.twitch.tv/?channel=tamaxx__&parent=localhost",
-    key:"live_769503280_OvrzeoJuVlcLkX3TngH8xf8VGw3s9b"
+    key:""
   },
   {
     name:"Youtube",
     url:"rtmp://a.rtmp.youtube.com/live2",
     embeded:"https://www.youtube.com/embed/ryV-5dW6LZ8",
-    key:"jqwc-hexq-0xhj-zg8c-a0vy"
+    key:""
 
   }
   

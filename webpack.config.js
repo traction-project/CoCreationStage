@@ -10,7 +10,7 @@ const frontend = {
   mode:"production",
   output: {
     filename: 'app.js',
-    path: path.resolve(__dirname, './public/traction'),
+    path: path.resolve(__dirname, './backend/static/app/traction'),
   },
    module: {
     rules: [

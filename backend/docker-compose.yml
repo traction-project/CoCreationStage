@@ -12,6 +12,7 @@ services:
             - 80:80
             - 8082:8082
             - 8080:8080
+            - 3001:3001
         restart: always
     static:
             image: servers_static
@@ -53,6 +54,29 @@ services:
       ports:
             - 8089:8089
             - 8989:8989
+    encodingapi:
+        image: traction-encoding-api-production
+        volumes:
+         - ./aws.json:/code/aws.json
+         - ./.env:/code/.env
+         - ./db:/code/db
+        ports:
+              - "3000:3000"
+        command: yarn start
+        environment:
+         - NODE_ENV=production
+        logging:
+                options:
+                        max-size: "200k"
+                        max-file: "3"
+        deploy:
+                restart_policy:
+                        condition: on-failure
+                        delay: 5s
+                        max_attempts: 3
+                update_config:
+                        parallelism: 2
+                        delay: 10s
 
 
 

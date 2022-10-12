@@ -27,7 +27,6 @@ export class AuthService {
         let body ={
             "username": "itamayo",
             "password": "123456",
-            "confirmation": "123456"
         }
         this.http.post(url+'api/login',body,options).subscribe((e:any)=>{
                 this.tokken = e.token;
