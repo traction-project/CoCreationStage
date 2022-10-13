@@ -7,6 +7,9 @@ services:
         - "27017:27017"
     reverseproxy:
         image: servers_reverseproxy
+        volumes:
+             - ./cert:/etc/nginx/conf.d/
+             - ./nginx-conf/nginx.conf:/etc/nginx/conf.d/default.conf  
         ports:
             - 443:443
             - 80:80
