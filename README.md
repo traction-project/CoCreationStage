@@ -43,7 +43,7 @@ The first step to prepare the application will be to download the repository:
 # cd CoCreationStage
 ```
 
-CoCreationStage is made up of a server part (dockers) and a client part (frontend). The first thing we have to do is download the docker images that make up the server part and install them. To install the server part we will execute the following commands:
+CoCreationStage is made up of a server part (dockers) and a client part (frontend). The first step we have to do is download the docker images that make up the server part and install them. To install the server part we will execute the following commands:
 
 ```bash
 
