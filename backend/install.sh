@@ -19,4 +19,4 @@ sh unLoadImageDockers.sh
 echo "Loading images to docker system...\n"
 sh loadImageDockers.sh
 echo "Composing dockers.."
-sudo docker-compose up
+docker-compose up
