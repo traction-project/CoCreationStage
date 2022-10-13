@@ -57,6 +57,7 @@
     "rollup-plugin-css-only": "^2.1.0",
     "style-loader": "^1.2.1",
     "webpack": "5.39.0",
+    "terser-webpack-plugin": "4.2.3",
     "webpack-cli": "4.7.2"
   },
   "license": "MIT",
@@ -64,7 +65,7 @@
   "module": "src/main.js",
   "name": "orkestraLib",
   "scripts": {
-    "build": " webpack --mode production",
+    "build": " webpack --mode development",
     "build-web": "rollup -c -w rollup.config.js",
     "server": "http-server . -S -C ./certs/cert.pem -K ./certs/key.pem -o",
     "start": "npm run build-web && webpack --watch & npm run server",

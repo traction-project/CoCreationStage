@@ -36,7 +36,7 @@
   "name": "orkestraApp",
   "scripts": {
     "build": "npm i && webpack --mode production && npm run move-to-orkestra-control",
-    "build:dev": "webpack --mode development",
+    "build:dev": "webpack --mode production",
     "builddev": "npm run build && npm run build-css && npm run move-to-orkestra-control",
     "test": "mocha --requirenpm run build babel-core/register",
     "build-css": "tailwindcss build -i style.css -o css/style.css",
