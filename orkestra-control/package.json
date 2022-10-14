@@ -24,7 +24,7 @@
         "jasmine-core": "3.5.0",
         "jasmine-marbles": "0.6.0",
         "ng-chat": "3.0.3",
-        "orkestraLib": "file:///../libs/orkestraLib",
+        "orkestraLib": "file:../libs/orkestraLib",
         "rxjs": "6.5.5",
         "share-api-polyfill": "^1.0.20",
         "tslib": "1.11.1",

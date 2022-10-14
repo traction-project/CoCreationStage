@@ -5,7 +5,7 @@
     "babel-polyfill": "6.26.0",
     "daisyui": "^1.16.2",
     "event-target-shim": "6.0.2",
-    "orkestraLib": "file:///../libs/orkestraLib",
+    "orkestraLib": "file:../libs/orkestraLib",
     "rxjs": "7.5.2",
     "webrtc-adapter": "8.1.1"
   },
