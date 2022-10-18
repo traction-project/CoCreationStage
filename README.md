@@ -1,114 +1,122 @@
 # TRACTION Co-Creation Stage
 
-CoCreationStage is composed by [MultiDeviceServer](https://github.com/tv-vicomtech/orkestra-server),[TimerServer](https://github.com/tv-vicomtech/motionServer)
-client library [Orkestra library](https://github.com/tv-vicomtech/Orkestralib), user application [OrkestraApp](https://github.com/tv-vicomtech/traction_RealTimePerformanceEngine/tree/master/orkestraApp) and [timeline editor](https://github.com/tv-vicomtech/traction_RealTimePerformanceEngine/tree/master/orkestra-control)
+This repository contains the CoCreation Stage code for the TRACTION EU-project. The CoCreation Stage is a web based tool that enables distributed performances connecting different stages and people. It is a JavaScript and TypeScript based tool using Angular framework for the frontend and different services at the backend. 
 
-<img src="https://www.traction-project.eu/wp-content/uploads/sites/3/2020/02/Logo-cabecera-Traction.png" align="left"/><em>This tool was originally developed as part of the <a href="https://www.traction-project.eu/">TRACTION</a> project, funded by the European Commission’s <a hef="http://ec.europa.eu/programmes/horizon2020/">Horizon 2020</a> research and innovation programme under grant agreement No. 870610.</em>
+At the client side, CoCreationStage is composed of two applications that use [Orkestralib library](https://github.com/tv-vicomtech/Orkestralib) (LGPL-V3) to enable multi-device and multi-user mechanisms. Those applicartions are:
+
+* [OrkestraControl](https://github.com/traction-project/CoCreationStage/tree/master/orkestra-control) is the application for artists to create a template for their show, defining beforehand a number of scenes, the number of stages, the screens/displays/projectors/devices at each stage and audio-visual assets including live and pre-recorded content. 
+* [OrkestraApp](https://github.com/traction-project/CoCreationStage/tree/master/orkestraApp), is the application for remote participants and viewers to follow the show. It allows to visualise all the content and also to share signal of the camera of the device being used in real time.
+
+At the server side, CoCreationStage makes use of four different services:
+
+* [Orkestra-server](https://github.com/tv-vicomtech/orkestra-server), to organise and maintain multi-device sessions and the shared data coherently.
+* [Janus](https://github.com/tv-vicomtech/janusgw), to manage all the WebRTC media flows.
+* [Motion server](https://github.com/tv-vicomtech/motionServer) to allow the syncronisation of the content, both in a single device or between multiple devices.  
+* [Encoding API for Co-Creation Stage](https://github.com/traction-project/encoding-api) to upload the pre-recorded content to be consumed.  
+
+
+<br><br>
+<img src="https://www.traction-project.eu/wp-content/uploads/sites/3/2020/02/Logo-cabecera-Traction.png" align="left"/><em>This tool was originally developed as part of the <a href="https://www.traction-project.eu/">TRACTION</a> project, funded by the European Commission’s <a hef="http://ec.europa.eu/programmes/horizon2020/">Horizon 2020</a> research and innovation programme under grant agreement No. 870610.</em><br><br><br><br>
+
 
 ## Documentation
 
 The documentation is available here: https://traction-project.github.io/CoCreationStage
 
-## Development
+## Prerequisites
 
-### Dependencies
+The deployment of the tool requires to have installed:
 
-* Nodejs. Required: v14.18.1
+* Nodejs v14.18.1
 * Npm
-* Docker-ce, docker-compose
-* Linux
+* Docker-ce
+* Docker-compose
 
-### Port
+## Deployment
 
-CoCreationStage is made up of many services and is a highly connected service, so it needs many ports to secure these connections.
-Backend service ports:
-
-  * 443 (reverse proxy)
-  * 80
-  * 8080 (motion)
-  * 8082 (orkestra-server)
-  * 3001 (enconde api)
-  * 27001 (mongo)
-  * 8089,8989 (janus, webrtc gateway)
-
-It's good to know that janus uses connections against stun services, by default it uses google's so port 19302 tcp/udp. On the other hand, the udp ports from 20,000 to 40,000 are recommended to have open since they will be used to make peer to peer connections for webrtc.
-
-### Start
-
+### Download
 The first step to prepare the application will be to download the repository:
 
 ```bash
-
 # git clone git@github.com:traction-project/CoCreationStage.git
 # cd CoCreationStage
 ```
 
-CoCreationStage is made up of a server part (dockers) and a client part (frontend). The first step we have to do is download the docker images that make up the server part and install them. To install the server part we will execute the following commands:
+### Ports
+
+The CoCreationStage is composed of many services that use the following ports:
+
+* 443 (reverse proxy)
+* 80
+* 8080 (motion)
+* 8082 (orkestra-server)
+* 3001 (encoding api)
+* 27001 (mongo)
+* 8089,8989 (janus, webrtc gateway)
+
+### Backend deployment
+
+To install the server part, it is necessary to download all the Docker images available [here](https://vicomtech.box.com/s/54gumjw56s05ps5dcg67dmpa1oet3qhx) and put them in *backend\images* forlder. Then, the following script installs them:
 
 ```bash
-
 # cd backend
-# sudo sh install.sh
+# sh install.sh
 ```
 
-> **NOTE:** The installation will take a few minutes, so be patient, it is only done once. There are 6 images downloaded as part of the server.
-
-If you want to uninstall we will execute:
+To uninstall, you can execute:
 
 ```bash
-
 # cd backend
-# sudo sh uninstall.sh
+# sh uninstall.sh
 ```
 
-### Backend setup
-
-You may want to manually start and stop it:
-
-Start 
-
+Next step is to deploy the backend using the following commands:
 ```bash
-
 # cd backend
-# sudo docker-compose up
+# docker-compose up
 ```
 
-Stop
+In case it is neccessary to stop the services, the commands are the following:
 
 ```bash
-
 # cd backend
-# sudo docker-compose down
+# docker-compose down
 ```
 
-To start the frontend, all we have to do is transpile and deploy the code so that it is accessible through the backend:
+The code of the service needed to host all the pre-recorded content to be used and the guidelines to deploy it can be found [here](https://github.com/traction-project/encoding-api). But in this case docker image is provided and the only thing to do is to configure the following files as specified [here](https://github.com/traction-project/encoding-api#setup): 
 
-### Configuration files
+* [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json)
+* [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env)
 
-Once the installation of the backend is finished, we configure the frontend part. For this, some files must be adapted:
 
-At Orkestra-control [config](https://github.com/traction-project/CoCreationStage/blob/feature/local/orkestra-control/src/environments/environment.prod.ts#L1) Change host variable for your own IP or domain, example host:"192.168.194"
 
-At OrkestraApp [config](https://github.com/traction-project/CoCreationStage/blob/feature/local/orkestraApp/src/config/environmet.js#L1) Change host
-variable for your own IP or domain, example host:"192.168.194"
+### Frontend
 
-#### Encoding & Uploading services
+To start the frontend, all we have to do is to configure the host to our local IP in the configuration files, transpile and deploy the code so that it is accessible through the backend.
 
-The file upload and transcoding service depends on Amazon cloud services, so it is necessary to configure certain services for this service to work. To do this, the following files must be modified:
+* Configure the *host* variable at Orkestra-control [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestra-control/src/environments/environment.ts) file. 
+   
+* Configure the *host* variable at OrkestraApp [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestraApp/src/config/environmet.js) file. 
 
-[aws configuration](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json)
-[bucket configuration](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env)
-
-### Frontend setup
-
-To start the frontend, all we have to do is transpile and deploy the code so that it is accessible through the backend. Jump to root folder of the repository:
+To transpile and deploy:
 
 ```bash
-
 # cd CoCreationStage
-# sudo npm run build
+# npm run build
 ```
 
-Once it's done, the app will be available at the following URL:
+Once it's done, go to the following URL to accept the Janus certificates:
+
+https://YOURHOST:8089/janus
+
+Then, the app will be available at the following URL:
 
 https://YOURHOST/
+
+## License
+<img src="https://www.gnu.org/graphics/lgplv3-147x51.png" align="left"/>
+<em> This tool is published under the license LGPL - V3. A copy of the GNU Lesser General Public License can be found <a href="https://github.com/traction-project/CoCreationStage/blob/master/licenseLGPL.txt" >here</a>.</em> <br><br>
+
+## Experiment
+
+We are aware that the deployment of the CoCreationStage with all its functionalities is not immediate. However, if you would like to carry out an experiment with the CoCreationStage in a real event, do not hesitate to contact [Vicomtech](https://www.vicomtech.org/) at mzorrilla@vicomtech.org. 
