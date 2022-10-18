@@ -9,3 +9,6 @@ orkestraApp/css
 
 # OrkestraApp static files
 orkestra-control/src/traction
+
+# Docker images .tar
+*.tar.gz
