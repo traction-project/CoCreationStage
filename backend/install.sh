@@ -2,17 +2,17 @@
 echo "Downloading images...\n"
 cd images
 echo "Downloading traction:janus image...\n"
-wget -q https://www.dropbox.com/s/mszne1m51fjtz00/traction%3Ajanus.tar.gz?dl=0 -O traction_janus.tar.gz
+wget -q https://vicomtech.box.com/s/tpcuin4h7gjza4x27swo3rkumzxo39jz -O traction_janus.tar.gz
 echo "Downloading traction:motion image...\n"
-wget -q https://www.dropbox.com/s/uwwnhgrlut4pjnk/traction%3Amotion.tar.gz?dl=0 -O traction_motion.tar.gz
-echo "Downloading tracion:orkestraServer image...\n"
-wget -q https://www.dropbox.com/s/k74cn2pfszlnzj2/traction%3Aorkestraserver.tar.gz?dl=0 -O traction_orkestraserver.tar.gz 
-echo "Downloading tracion:reverseproxy image...\n"
-wget -q https://www.dropbox.com/s/gvjt9lqb6s5z4eh/traction_reverseproxy.tar.gz?dl=0 -O traction_reverseproxy.tar.gz
-echo "Downloading tracion:staticServer image...\n"
-wget -q https://www.dropbox.com/s/hqsl29ojj42986w/traction%3Astatic.tar.gz?dl=0 -O traction_static.tar.gz
-echo "Downloading tracion:encoding api image...\n"
-wget -q https://www.dropbox.com/s/l0ttvx15vdvpl47/traction_endoningapi.tar.gz?dl=0 -O traction_endoningapi.tar.gz
+wget -q https://vicomtech.box.com/s/0i7bnbqfsbivttixilv3i0hjshlisa1x -O traction_motion.tar.gz
+echo "Downloading traction:orkestraServer image...\n"
+wget -q https://vicomtech.box.com/s/h13r9st9bncysgl2qo7ib273eno5633e -O traction_orkestraserver.tar.gz 
+echo "Downloading traction:reverseproxy image...\n"
+wget -q https://vicomtech.box.com/s/wh07ej7jwrgftiriohw1xjss45c0rjs6 -O traction_reverseproxy.tar.gz
+echo "Downloading traction:staticServer image...\n"
+wget -q https://vicomtech.box.com/s/heejadeqpkxyhai4cnkbdnuo72n133zx -O traction_static.tar.gz
+echo "Downloading traction:encoding api image...\n"
+wget -q https://vicomtech.box.com/s/ln166k8e6kqgdkth9ludpq4l28st6cxb -O traction_encodingapi.tar.gz
 echo "unLoading existing image at docker system...\n"
 cd ..
 sh unLoadImageDockers.sh
