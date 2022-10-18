@@ -1,4 +1,4 @@
-const host = "192.168.1.136";
+const host = "localhost";
 
 let environmet = {
     motionServer:host,
