@@ -10,7 +10,7 @@ At the client side, CoCreationStage is composed of two applications that use [Or
 At the server side, CoCreationStage makes use of four different services:
 
 * [Orkestra-server](https://github.com/tv-vicomtech/orkestra-server), to organise and maintain multi-device sessions and the shared data coherently.
-* [Janus](https://github.com/tv-vicomtech/janusgw), to manage all the WebRTC media flows.
+* [Janus](https://github.com/meetecho/janus-gateway), to manage all the WebRTC media flows.
 * [Motion server](https://github.com/tv-vicomtech/motionServer) to allow the syncronisation of the content, both in a single device or between multiple devices.  
 * [Encoding API for Co-Creation Stage](https://github.com/traction-project/encoding-api) to upload the pre-recorded content to be consumed.  
 
