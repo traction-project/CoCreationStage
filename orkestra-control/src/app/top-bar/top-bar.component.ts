@@ -21,7 +21,7 @@ export class TopBarComponent implements OnInit {
   
   @Output() recordEvent: EventEmitter<any> = new EventEmitter();
   @Input() display:boolean = true;
-  constructor(private route: ActivatedRoute, private router: Router, dataService: DataService, public elem: ElementRef,private _snackBar: MatSnackBar,private keycloak: KeycloakService,private translate: TranslateService) {
+  constructor(private route: ActivatedRoute, private router: Router, dataService: DataService, public elem: ElementRef,private _snackBar: MatSnackBar,/*private keycloak: KeycloakService,*/private translate: TranslateService) {
     this.dataService = dataService;
     this.sharedLink = environment.protocol+"://"+environment.controlServer+"/player?id=controllerScreen&room=1234";
   }
@@ -71,7 +71,7 @@ export class TopBarComponent implements OnInit {
    
   }
   logout (){
-    this.keycloak.logout();
+   // this.keycloak.logout();
   }
 
 }

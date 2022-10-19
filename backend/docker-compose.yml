@@ -1,0 +1,63 @@
+version: '3'
+ 
+services:
+    mongo:
+       image: mongo
+    reverseproxy:
+        image: nginx:mainline-alpine
+        volumes:
+            - ./cert:/etc/ssl/certs/
+            - ./nginx-conf/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./static/app:/var/www/html
+        ports:
+            - 443:443
+            - 80:80
+            - 8082:8082
+            - 8080:8080
+            - 3001:3001
+        # restart: always
+        depends_on:
+            - motion
+            - orkestraserver
+    motion:
+        image: servers_motion
+        restart: always
+        environment:
+           NODE_ENV: production
+           USE_HTTPS: "false"
+
+    orkestraserver:
+        image: servers_orkestraserver
+        depends_on:
+            - mongo
+        restart: always
+        environment:
+           NODE_ENV: production
+           USE_HTTPS: "false"
+           DOMAIN_MONGO: mongo
+           DBNAME: orkestra
+           PORT: 8082
+    janus:
+      image: quay.io/vicomtech/traction:janus
+      command: ["/opt/janus/bin/janus","--full-trickle"]
+      volumes:
+        - "./cert:/opt/janus/share/janus/certs"
+      ports:
+            - 8089:8089
+            - 8989:8989
+    encodingapi:
+        image: traction-encoding-api-production
+        volumes:
+         - ./aws.json:/code/aws.json
+         - ./.env:/code/.env
+         - ./db:/code/db
+        command: yarn start
+        environment:
+         - NODE_ENV=production
+        logging:
+                options:
+                        max-size: "200k"
+                        max-file: "3"
+
+
+

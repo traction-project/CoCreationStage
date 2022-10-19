@@ -1,6 +1,8 @@
+const host = "localhost";
+
 let environmet = {
-    motionServer:"devstage.traction-project.eu",
-    sharedState:"devstage.traction-project.eu:8083",
-    janus:"stage.traction-project.eu"
+    motionServer:host,
+    sharedState:host+":8082",
+    janus:host
 }
 export {environmet};

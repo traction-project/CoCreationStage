@@ -36,7 +36,7 @@ export class TemplateComponent {
   @ViewChild(MatTable) table: MatTable<any>;
 
   constructor(private route: ActivatedRoute, public dataService: DataService, private dbService: DBService, public dialog: MatDialog, private router: Router
-    , public janusService: JanusService, private mediaObserver: MediaObserver, private translate: TranslateService,private keycloak: KeycloakService) {
+    , public janusService: JanusService, private mediaObserver: MediaObserver, private translate: TranslateService,/*private keycloak: KeycloakService*/) {
     this.displayedColumns = ['name', 'numberOfRooms', 'numberOfScenes', 'actions'];
     this.dataService.setLanguage('pt');
     // this.language = this.dataService.getLanguage().name;

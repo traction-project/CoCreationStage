@@ -5,7 +5,7 @@
     "babel-polyfill": "6.26.0",
     "daisyui": "^1.16.2",
     "event-target-shim": "6.0.2",
-    "orkestraLib": "git+ssh://git@github.com/tv-vicomtech/Orkestralib.git#develop",
+    "orkestraLib": "file:../libs/orkestraLib",
     "rxjs": "7.5.2",
     "webrtc-adapter": "8.1.1"
   },
@@ -35,8 +35,8 @@
   "main": "./src/app.js",
   "name": "orkestraApp",
   "scripts": {
-    "build": "webpack --mode production",
-    "build:dev": "webpack --mode development",
+    "build": "npm i && webpack --mode production && npm run move-to-orkestra-control",
+    "build:dev": "webpack --mode production",
     "builddev": "npm run build && npm run build-css && npm run move-to-orkestra-control",
     "test": "mocha --requirenpm run build babel-core/register",
     "build-css": "tailwindcss build -i style.css -o css/style.css",

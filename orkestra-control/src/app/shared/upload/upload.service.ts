@@ -38,7 +38,7 @@ export class UploadService {
       console.log(headers);
       // create a http-post request and pass the form
       // tell it to report the upload progress
-      const req = new HttpRequest('POST', url+"api/upload/raw", formData, {
+      const req = new HttpRequest('POST', url+"/api/upload/raw", formData, {
         reportProgress: true,
 	      headers:new HttpHeaders()
 	    .set('Authorization','Bearer '+this.authService.getTokken())
@@ -84,7 +84,7 @@ export class UploadService {
       let headers = new HttpHeaders();
       headers.append('authorization', "Bearer "+this.authService.getTokken());
       console.log("File has audio",_file["audio"]);
-      const req = new HttpRequest('POST',url+"api/upload/encode", {"input":_file.url,"resolutions":resolutions,"hasAudio":_file["audio"]}, {
+      const req = new HttpRequest('POST',url+"/api/upload/encode", {"input":_file.url,"resolutions":resolutions,"hasAudio":_file["audio"]}, {
       reportProgress: false,
       headers:new HttpHeaders()
 	    .set('Authorization','Bearer '+this.authService.getTokken())

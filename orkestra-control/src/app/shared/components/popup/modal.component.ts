@@ -2,12 +2,8 @@ import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { DataService } from 'src/app/shared/services/data.service';
 import { RtspCam } from 'src/app/shared/models/rtspCam.class';
 import {MatSelectionList, MatSelectionListChange, MAT_DIALOG_DATA} from '@angular/material';
-import {SafePipe} from '../../pipes/safe';
 import { MatDialogRef } from '@angular/material/dialog';
-import { JetsonService } from '../../services/jetson.service';
-import { YTService } from '../../services/yt.service';
-import { environment } from 'src/environments/environment';
-import { trigger } from '@angular/animations';
+//import { YTService } from '../../services/yt.service';
 import { Room } from '../../models/room.class';
 import { Show } from '../../models/show.class';
 
@@ -31,9 +27,9 @@ export class ModalComponent implements OnInit {
   userSelected:any;
   sub_mode: any;
   ytPlayerUrl:string = "https://player.twitch.tv/?channel=tamaxx__&parent=localhost";
-  ykey:string="live_769503280_OvrzeoJuVlcLkX3TngH8xf8VGw3s9b";
+  ykey:string="";
   ytlog:string = "";
-  ytserver:string= "18.200.88.210";
+  ytserver:string= "";
   ytUrl:string="rtmp://mad01.contribute.live-video.net/app";
   statusLoop:any;
   devices:any = [];
@@ -48,13 +44,13 @@ export class ModalComponent implements OnInit {
     name:"Twitch",
     url:"rtmp://mad01.contribute.live-video.net/app",
     embeded:"https://player.twitch.tv/?channel=tamaxx__&parent=localhost",
-    key:"live_769503280_OvrzeoJuVlcLkX3TngH8xf8VGw3s9b"
+    key:""
   },
   {
     name:"Youtube",
     url:"rtmp://a.rtmp.youtube.com/live2",
     embeded:"https://www.youtube.com/embed/ryV-5dW6LZ8",
-    key:"jqwc-hexq-0xhj-zg8c-a0vy"
+    key:""
 
   }
   
@@ -62,7 +58,7 @@ export class ModalComponent implements OnInit {
   service:any;
   images:any = [];
   nosignalImage:any;
-  constructor(public elem:ElementRef,public dialogRef: MatDialogRef<ModalComponent>,public dataService:DataService,public ytService:YTService,private jetsonService:JetsonService,@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public elem:ElementRef,public dialogRef: MatDialogRef<ModalComponent>,public dataService:DataService,/*public ytService:YTService,*/@Inject(MAT_DIALOG_DATA) public data: any) {
       
       console.log(this.camList);
       this.rcam = new RtspCam("","");
@@ -172,29 +168,29 @@ export class ModalComponent implements OnInit {
   }
 
   startYT (){
-      clearInterval(this.statusLoop);
-      this.ytService.setConfig(this.ykey,this.ytUrl).then(response => response.text())
-      .then(result => {
-        this.ytService.start();
-        setTimeout(()=>{this.ytPlayerUrl += "&update=1";},10000);
-        console.log(result)
-      })
-      .catch(error => console.log('error', error));;
+      // clearInterval(this.statusLoop);
+      // this.ytService.setConfig(this.ykey,this.ytUrl).then(response => response.text())
+      // .then(result => {
+      //   this.ytService.start();
+      //   setTimeout(()=>{this.ytPlayerUrl += "&update=1";},10000);
+      //   console.log(result)
+      // })
+      // .catch(error => console.log('error', error));;
       
-      this.statusLoop = setInterval(()=>{
-          this.ytService.status().then(response => response.text()).then((txt)=>{
-              this.elem.nativeElement.querySelector('#status').value=txt;
-          }).catch((er)=>{
-            console.error(er);
-          })
-      },2000);
+      // this.statusLoop = setInterval(()=>{
+      //     this.ytService.status().then(response => response.text()).then((txt)=>{
+      //         this.elem.nativeElement.querySelector('#status').value=txt;
+      //     }).catch((er)=>{
+      //       console.error(er);
+      //     })
+      // },2000);
   }
   stopYT (){
-    this.ytService.stop();
-    setTimeout(()=>{
+    // this.ytService.stop();
+    // setTimeout(()=>{
      
-      clearInterval(this.statusLoop);
-    },4000)
+    //   clearInterval(this.statusLoop);
+    // },4000)
   }
   saveYT (){
     /* cookies */
@@ -203,8 +199,7 @@ export class ModalComponent implements OnInit {
     this.dialogRef.close(null);
   }
   remove(name:string){
-    this.jetsonService.deleteFromName(name);
-    setTimeout(()=>{this.updateList();},2000);
+   
   }
 
 }
