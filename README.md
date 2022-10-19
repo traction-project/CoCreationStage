@@ -123,7 +123,7 @@ The code of the service needed to host all the pre-recorded content and the guid
 
 ## License
 <img src="https://www.gnu.org/graphics/lgplv3-147x51.png" align="left"/>
-<em> This tool is published under the license LGPL - V3. A copy of the GNU Lesser General Public License can be found <a href="https://github.com/traction-project/CoCreationStage/blob/master/licenseLGPL.txt" >here</a>.</em> <br><br>
+<em> This tool is published under the license LGPL - V3. A copy of the GNU Lesser General Public License can be found <a href="[https://github.com/traction-project/CoCreationStage/blob/master/licenseLGPL.txt](https://github.com/traction-project/CoCreationStage/blob/master/LICENSE.LPGL)" >here</a>.</em> <br><br>
 
 ## Experiment
 
