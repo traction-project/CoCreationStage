@@ -18,17 +18,17 @@ export class AuthService {
   tokken:string="";
   constructor(private http: HttpClient) {
 
-      this.login("itamayo","123456")
+      this.login("test","1234")
    }
    login(user:string,password:string){
         let options:any =  {
            
           }
         let body ={
-            "username": "itamayo",
-            "password": "123456",
+            "username": "test",
+            "password": "1234",
         }
-        this.http.post(url+'api/login',body,options).subscribe((e:any)=>{
+        this.http.post(url+'/api/login',body,options).subscribe((e:any)=>{
                 this.tokken = e.token;
         });
    }
