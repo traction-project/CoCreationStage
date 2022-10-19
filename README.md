@@ -27,22 +27,13 @@ The documentation is available here: https://traction-project.github.io/CoCreati
 
 The deployment of the tool requires to have installed:
 
-* Nodejs v14.18.1
-* Npm
-* Docker-ce
-* Docker-compose
+- Nodejs v14.18.1
+- Npm
+- Docker-ce
+- Docker-compose
+- (Optional) AWS Account
 
-## Deployment
-
-### Download
-The first step to prepare the application will be to download the repository:
-
-```bash
-# git clone git@github.com:traction-project/CoCreationStage.git
-# cd CoCreationStage
-```
-
-### Ports
+## Ports
 
 The CoCreationStage is composed of many services that use the following ports:
 
@@ -54,64 +45,82 @@ The CoCreationStage is composed of many services that use the following ports:
 * 27001 (mongo)
 * 8089,8989 (janus, webrtc gateway)
 
-### Backend deployment
 
-To install the server part, it is necessary to download all the Docker images available [here](https://vicomtech.box.com/s/54gumjw56s05ps5dcg67dmpa1oet3qhx) and put them in *backend\images* forlder. Then, the following script installs them:
+## Deployment
 
-```bash
-# cd backend
-# sh install.sh
-```
+1. Clone the project repository:
 
-To uninstall, you can execute:
+    ```bash
+    git clone git@github.com:traction-project/CoCreationStage.git
+    cd CoCreationStage
+    ```
+2. The application use several services and servers. This servers runs inside Docker containers. We need download the docker images from [here](https://vicomtech.box.com/s/54gumjw56s05ps5dcg67dmpa1oet3qhx). 
+    
+    After download the files, move them to **backend\images** folder. 
 
-```bash
-# cd backend
-# sh uninstall.sh
-```
+3. Install the docker images downloaded with the next script:
 
-Next step is to deploy the backend using the following commands:
-```bash
-# cd backend
-# docker-compose up
-```
+    ```bash
+    cd backend
+    sh install.sh
+    ```
 
-In case it is neccessary to stop the services, the commands are the following:
+    (Optional) If you want to remove this images later, you can execute:
 
-```bash
-# cd backend
-# docker-compose down
-```
+    ```bash
+    cd backend
+    sh uninstall.sh
+    ```
 
-The code of the service needed to host all the pre-recorded content to be used and the guidelines to deploy it can be found [here](https://github.com/traction-project/encoding-api). But in this case docker image is provided and the only thing to do is to configure the following files as specified [here](https://github.com/traction-project/encoding-api#setup): 
+4. Run the docker containers using the following commands:
 
-* [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json)
-* [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env)
+    ```bash
+    cd backend
+    docker-compose up -d
+    ```
+
+    (Optional) In case it is neccessary to stop the services, the commands are the following:
+
+    ```bash
+    cd backend
+    docker-compose down
+    ```
 
 
+5. (Optional) **Multimedia Service**. In case you want to use pre-recorded content as multimedia files, follow the steps specify in [Install Multimedia Service](#multimedia-service) in order to configure it. 
 
-### Frontend
+6. Configure the host or IP where will be deploy the application (by default is localhost):
 
-To start the frontend, all we have to do is to configure the host to our local IP in the configuration files, transpile and deploy the code so that it is accessible through the backend.
+    -  Configure the *host* variable at Orkestra-control [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestra-control/src/environments/environment.ts) file. 
+      
+    -  Configure the *host* variable at OrkestraApp [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestraApp/src/config/environmet.js) file. 
 
-* Configure the *host* variable at Orkestra-control [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestra-control/src/environments/environment.ts) file. 
-   
-* Configure the *host* variable at OrkestraApp [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestraApp/src/config/environmet.js) file. 
+7. Compile the application:
 
-To transpile and deploy:
+    ```bash
+    npm run build
+    ```
 
-```bash
-# cd CoCreationStage
-# npm run build
-```
+8. Once it's done, the application will be available at the following URL:
 
-Once it's done, go to the following URL to accept the Janus certificates:
+    https://YOURHOST/ (Where YOURHOST is the IP or domain specify in the step 6)
+    
 
-https://YOURHOST:8089/janus
+## Multimedia Service
 
-Then, the app will be available at the following URL:
+The code of the service needed to host all the pre-recorded content to be used and the guidelines to deploy it can be found [here](https://github.com/traction-project/encoding-api). But in this case docker image is provided, so the only thing you need is follow the next steps:
 
-https://YOURHOST/
+-  You neConfigure the AWS Credentials in [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json) and  [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env) following the next documentation: [link](https://github.com/traction-project/encoding-api#setup): 
+
+- The application use a specific user credentials to autenticate in this service. We need create this user before run the application. To create it, we need run the next command in the **backend** folder:
+
+    ```bash
+    cd backend
+    docker compose exec encodingapi yarn register
+    ```
+
+    After run this command, it will ask about a username and password. The username must be **test** and the password **1234**
+
 
 ## License
 <img src="https://www.gnu.org/graphics/lgplv3-147x51.png" align="left"/>
