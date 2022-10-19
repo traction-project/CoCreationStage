@@ -55,7 +55,7 @@ The CoCreationStage is composed of many services that use the following ports:
     ```
 2. The application use several services and servers. This servers runs inside Docker containers. We need download the docker images from [here](https://vicomtech.box.com/s/54gumjw56s05ps5dcg67dmpa1oet3qhx). 
     
-    After download the files, move them to **backend\images** folder. 
+    After download the files, move them to **backend/images** folder. 
 
 3. Install the docker images downloaded with the next script:
 
@@ -86,7 +86,7 @@ The CoCreationStage is composed of many services that use the following ports:
     ```
 
 
-5. (Optional) **Multimedia Service**. In case you want to use pre-recorded content as multimedia files, follow the steps specified in [Install Multimedia Service](#multimedia-service) section in order to configure it. 
+5. (Optional) **Encoding  API**. In case you want to use pre-recorded content as multimedia files, follow the steps specified in [Install Encoding API](#encoding-api) section in order to configure it. 
 
 6. Configure the host or IP where will be deploy the application (by default is localhost):
 
@@ -105,13 +105,13 @@ The CoCreationStage is composed of many services that use the following ports:
     https://YOURHOST/ (Where YOURHOST is the IP or domain specified in the step 6)
     
 
-## Multimedia Service
+## Encoding API
 
 The code of the service needed to host all the pre-recorded content to be used and the guidelines to deploy it can be found [here](https://github.com/traction-project/encoding-api). But in this case docker image is provided, so the only thing you need is follow the next steps:
 
--  This service use a Elastic Transcoder pipeline from AWS to transcode the multimedia files in several formats and reslutions and a S3 Bucket to store this transcoded files. To configure this services, we need configure the AWS Credentials in [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json) and  [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env) following the next documentation: [link](https://github.com/traction-project/encoding-api#setup): 
+-  This service use a Elastic Transcoder pipeline from AWS to transcode the multimedia files in several formats and reslutions and a S3 Bucket to store this transcoded files. To configure this services, we need to configure the AWS Credentials in [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json) and  [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env) following the next documentation: [link](https://github.com/traction-project/encoding-api#setup): 
 
-- The application use a specific user credentials to autenticate in this service. We need create this user before run the application. To create it, we need run the next command in the **backend** folder:
+- The application uses specific user credentials to do the authentication in this service. We need to create this user before running the application. To create it, we need to run the next command in the **backend** folder:
 
     ```bash
     cd backend
