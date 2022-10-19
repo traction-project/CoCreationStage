@@ -42,7 +42,6 @@ The CoCreationStage is composed of many services that use the following ports:
 * 8080 (motion)
 * 8082 (orkestra-server)
 * 3001 (encoding api)
-* 27001 (mongo)
 * 8089,8989 (janus, webrtc gateway)
 
 
