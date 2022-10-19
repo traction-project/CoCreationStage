@@ -53,9 +53,9 @@ The CoCreationStage is composed of many services that use the following ports:
     git clone git@github.com:traction-project/CoCreationStage.git
     cd CoCreationStage
     ```
-2. The application use several services and servers. This servers runs inside Docker containers. We need download the docker images from [here](https://vicomtech.box.com/s/54gumjw56s05ps5dcg67dmpa1oet3qhx). 
+2. The application uses several services and servers. These servers run inside Docker containers. So first of all, we need to download the docker images from [here](https://vicomtech.box.com/s/54gumjw56s05ps5dcg67dmpa1oet3qhx). 
     
-    After download the files, move them to **backend/images** folder. 
+    After downloading the files, move them to **backend/images** folder. 
 
 3. Install the docker images downloaded with the next script:
 
@@ -64,7 +64,7 @@ The CoCreationStage is composed of many services that use the following ports:
     sh install.sh
     ```
 
-    (Optional) If you want to remove this images later, you can execute:
+    (Optional) If you want to remove these images later, you can execute:
 
     ```bash
     cd backend
@@ -88,11 +88,11 @@ The CoCreationStage is composed of many services that use the following ports:
 
 5. (Optional) **Encoding  API**. In case you want to use pre-recorded content as multimedia files, follow the steps specified in [Install Encoding API](#encoding-api) section in order to configure it. 
 
-6. Configure the host or IP where will be deploy the application (by default is localhost):
+6. Configure the host or IP where deploy the application will be deployed (by default is localhost):
 
-    -  Configure the *host* variable at Orkestra-control [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestra-control/src/environments/environment.ts) file. 
+    -  Configure the *host* variable at Orkestra-control [config](https://github.com/traction-project/CoCreationStage/blob/master/orkestra-control/src/environments/environment.ts) file. 
       
-    -  Configure the *host* variable at OrkestraApp [config](https://github.com/tv-vicomtech/CoCreationStage/blob/dev/orkestraApp/src/config/environmet.js) file. 
+    -  Configure the *host* variable at OrkestraApp [config](https://github.com/traction-project/CoCreationStage/blob/master/orkestraApp/src/config/environmet.js) file. 
 
 7. Compile the application:
 
