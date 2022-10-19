@@ -10,10 +10,11 @@
   "scripts": {
     "start": "npm run build:local",
     "start:watch": "npm run build:watch & node ./bin/backend.js",
-    "build": "npm i && npm run build:orkestraApp && npm run build:control",
+    "build": "npm i && npm run build:orkestralib && npm run build:orkestraApp && npm run build:control",
     "build:dev": "npm run build:orkestraApp && npm run build:control:dev",
-    "build:orkestraApp": "cd orkestraApp && npm i && cd .. && webpack --mode production && cd orkestraApp && npm i && cd .. && cd orkestraApp && npm run build-css && cp -r css ../backend/static/app/traction/",
+    "build:orkestraApp": "cd orkestraApp && npm i && cd .. && webpack --mode production && cd orkestraApp && npm run build-css && cp -r css ../backend/static/app/traction/",
     "build:control": "cd orkestra-control && npm run build && cd ..",
+    "build:orkestralib": "cd libs/orkestraLib && npm install && cd ..",
     "build:control:dev": "cd orkestra-control && npm run build:dev && cd ..",
     "build:local": "cd orkestraApp && npm i && npm run builddev && cd ../orkestra-control && npm i && npm start",
     "build:watch": "webpack --watch"
