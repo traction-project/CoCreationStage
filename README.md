@@ -109,7 +109,7 @@ The CoCreationStage is composed of many services that use the following ports:
 
 The code of the service needed to host all the pre-recorded content and the guidelines to deploy it can be found [here](https://github.com/traction-project/encoding-api). But in this case docker image is provided, so the only thing you need is follow the next steps:
 
--  This service use a Elastic Transcoder pipeline from AWS to transcode the multimedia files in several formats and reslutions and a S3 Bucket to store this transcoded files. To configure this services, we need to configure the AWS Credentials in [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json) and  [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env) following the next documentation: [link](https://github.com/traction-project/encoding-api#setup): 
+-  This service use a Elastic Transcoder pipeline from AWS to transcode the multimedia files in several formats and reslutions and a S3 Bucket to store this transcoded files. To configure this services, we need to configure the AWS Credentials in [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json) and  [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env) following the next documentation: [link](https://github.com/traction-project/encoding-api#setup).
 
 - The application uses specific user credentials to do the authentication in this service. We need to create this user before running the application. To create it, we need to run the next command in the **backend** folder:
 
