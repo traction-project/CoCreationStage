@@ -23,7 +23,7 @@ At the server side, CoCreationStage makes use of four different services:
 
 The documentation is available here: https://traction-project.github.io/CoCreationStage
 
-## Prerequisites
+## Dependencies
 
 The deployment of the tool requires to have installed:
 
