@@ -119,6 +119,8 @@ The code of the service needed to host all the pre-recorded content and the guid
     ```
 
     After running this command, it will ask about a username and password. The username must be **test** and the password **1234**
+   
+- The S3 Bucket in AWS must be public. Copy the S3 Bucket URL and add it to **subdomains** field in [environment.ts](https://github.com/traction-project/CoCreationStage/blob/master/orkestra-control/src/environments/environment.ts), [environment.dev.ts](https://github.com/traction-project/CoCreationStage/blob/master/orkestra-control/src/environments/environment.dev.ts) and [environment.prd.ts](https://github.com/traction-project/CoCreationStage/blob/master/orkestra-control/src/environments/environment.prod.ts) files
 
 
 ## License
