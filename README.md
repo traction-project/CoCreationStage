@@ -2,7 +2,7 @@
 
 This repository contains the CoCreation Stage code for the TRACTION EU-project. The CoCreation Stage is a web based tool that enables distributed performances connecting different stages and people. It is a JavaScript and TypeScript based tool using Angular framework for the frontend and different services at the backend. 
 
-At the client side, CoCreationStage is composed of two applications that use [Orkestralib library](https://github.com/tv-vicomtech/Orkestralib) (LGPL-V3) to enable multi-device and multi-user mechanisms. Those applicartions are:
+At the client side, CoCreationStage is composed of two applications that use [Orkestralib library](https://github.com/tv-vicomtech/Orkestralib) (LGPL-V3) to enable multi-device and multi-user mechanisms:
 
 * [OrkestraControl](https://github.com/traction-project/CoCreationStage/tree/master/orkestra-control) is the application for artists to create a template for their show, defining beforehand a number of scenes, the number of stages, the screens/displays/projectors/devices at each stage and audio-visual assets including live and pre-recorded content. 
 * [OrkestraApp](https://github.com/traction-project/CoCreationStage/tree/master/orkestraApp), is the application for remote participants and viewers to follow the show. It allows to visualise all the content and also to share signal of the camera of the device being used in real time.
@@ -57,7 +57,7 @@ The CoCreationStage is composed of many services that use the following ports:
     
     After downloading the files, move them to **backend/images** folder. 
 
-3. Install the docker images downloaded with the next script:
+3. Install the docker images downloaded through next script:
 
     ```bash
     cd backend
@@ -86,9 +86,9 @@ The CoCreationStage is composed of many services that use the following ports:
     ```
 
 
-5. (Optional) **Encoding  API**. In case you want to use pre-recorded content as multimedia files, follow the steps specified in [Install Encoding API](#encoding-api) section in order to configure it. 
+5. (Optional) **Encoding  API**. In case you want to use pre-recorded content, follow the steps specified [here](#encoding-api). 
 
-6. Configure the host or IP where deploy the application will be deployed (by default is localhost):
+6. Configure the host or IP where the application will be deployed (by default is localhost):
 
     -  Configure the *host* variable at Orkestra-control [config](https://github.com/traction-project/CoCreationStage/blob/master/orkestra-control/src/environments/environment.ts) file. 
       
@@ -109,7 +109,7 @@ The CoCreationStage is composed of many services that use the following ports:
 
 The code of the service needed to host all the pre-recorded content and the guidelines to deploy it can be found [here](https://github.com/traction-project/encoding-api). But in this case docker image is provided, so the only thing you need is follow the next steps:
 
--  This service use a Elastic Transcoder pipeline from AWS to transcode the multimedia files in several formats and reslutions and a S3 Bucket to store this transcoded files. To configure this services, we need to configure the AWS Credentials in [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json) and  [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env) following the next documentation: [link](https://github.com/traction-project/encoding-api#setup).
+-  This service uses a Elastic Transcoder pipeline from AWS to transcode the multimedia files to several formats and resolutions and a S3 Bucket to store these transcoded files. To configure these services, we need to configure the AWS Credentials in [aws.json](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/aws.json) and  [.env](https://github.com/traction-project/CoCreationStage/blob/feature/local/backend/.env) following the next documentation: [link](https://github.com/traction-project/encoding-api#setup).
 
 - The application uses specific user credentials to do the authentication in this service. That is why we need to create this user before running the application. To create it, we need to run the next command in the **backend** folder:
 
@@ -118,7 +118,7 @@ The code of the service needed to host all the pre-recorded content and the guid
     docker compose exec encodingapi yarn register
     ```
 
-    After run this command, it will ask about a username and password. The username must be **test** and the password **1234**
+    After running this command, it will ask about a username and password. The username must be **test** and the password **1234**
 
 
 ## License
