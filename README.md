@@ -2,14 +2,14 @@
 
 This repository contains the CoCreation Stage code for the TRACTION EU-project. The CoCreation Stage is a web based tool that enables distributed performances connecting different stages and people. It is a JavaScript and TypeScript based tool using Angular framework for the frontend and different services at the backend. 
 
-At the client side, CoCreationStage is composed of two applications that use [Orkestralib library](https://github.com/tv-vicomtech/Orkestralib) (LGPL-V3) to enable multi-device and multi-user mechanisms:
+At the client side, CoCreationStage is composed of two applications that use [Orkestralib library](https://github.com/tv-vicomtech/orkestraClient) (LGPL-V3) to enable multi-device and multi-user mechanisms:
 
 * [OrkestraControl](https://github.com/traction-project/CoCreationStage/tree/master/orkestra-control) is the application for artists to create a template for their show, defining beforehand a number of scenes, the number of stages, the screens/displays/projectors/devices at each stage and audio-visual assets including live and pre-recorded content. 
 * [OrkestraApp](https://github.com/traction-project/CoCreationStage/tree/master/orkestraApp), is the application for remote participants and viewers to follow the show. It allows to visualise all the content and also to share signal of the camera of the device being used in real time.
 
 At the server side, CoCreationStage makes use of four different services:
 
-* [Orkestra-server](https://github.com/tv-vicomtech/orkestra-server), to organise and maintain multi-device sessions and the shared data coherently.
+* [Orkestra-server](https://github.com/tv-vicomtech/orkestraServer/), to organise and maintain multi-device sessions and the shared data coherently.
 * [Janus](https://github.com/meetecho/janus-gateway), to manage all the WebRTC media flows.
 * [Motion server](https://github.com/tv-vicomtech/motionServer) to allow the syncronisation of the content, both in a single device or between multiple devices.  
 * [Encoding API for Co-Creation Stage](https://github.com/traction-project/encoding-api) to upload the pre-recorded content to be consumed.  
