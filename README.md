@@ -1,13 +1,13 @@
 # TRACTION Co-Creation Stage
 
-This repository contains the CoCreation Stage code for the TRACTION EU-project. The CoCreation Stage is a web based tool that enables distributed performances connecting different stages and people. It is a JavaScript and TypeScript based tool using Angular framework for the frontend and different services at the backend. 
+This repository contains the Co-Creation Stage code for the TRACTION EU-project. The Co-Creation Stage is a web based tool that enables distributed performances connecting different stages and people. It is a JavaScript and TypeScript based tool using Angular framework for the frontend and different services at the backend. 
 
-At the client side, CoCreationStage is composed of two applications that use [Orkestralib library](https://github.com/tv-vicomtech/orkestraClient) (LGPL-V3) to enable multi-device and multi-user mechanisms:
+At the client side, Co-Creation Stage is composed of two applications that use [Orkestralib library](https://github.com/tv-vicomtech/orkestraClient) (LGPL-V3) to enable multi-device and multi-user mechanisms:
 
 * [OrkestraControl](https://github.com/traction-project/CoCreationStage/tree/master/orkestra-control) is the application for artists to create a template for their show, defining beforehand a number of scenes, the number of stages, the screens/displays/projectors/devices at each stage and audio-visual assets including live and pre-recorded content. 
 * [OrkestraApp](https://github.com/traction-project/CoCreationStage/tree/master/orkestraApp), is the application for remote participants and viewers to follow the show. It allows to visualise all the content and also to share signal of the camera of the device being used in real time.
 
-At the server side, CoCreationStage makes use of four different services:
+At the server side, Co-Creation Stage makes use of four different services:
 
 * [Orkestra-server](https://github.com/tv-vicomtech/orkestraServer/), to organise and maintain multi-device sessions and the shared data coherently.
 * [Janus](https://github.com/meetecho/janus-gateway), to manage all the WebRTC media flows.
@@ -35,7 +35,7 @@ The deployment of the tool requires to have installed:
 
 ## Ports
 
-The CoCreationStage is composed of many services that use the following ports:
+The Co-Creation Stage is composed of many services that use the following ports:
 
 * 443 (reverse proxy)
 * 80
@@ -129,4 +129,4 @@ The code of the service needed to host all the pre-recorded content and the guid
 
 ## Experiment
 
-We are aware that the deployment of the CoCreationStage with all its functionalities is not immediate. However, if you would like to carry out an experiment with the CoCreationStage in a real event, do not hesitate to contact [Vicomtech](https://www.vicomtech.org/) at mzorrilla@vicomtech.org. 
+We are aware that the deployment of the Co-Creation Stage with all its functionalities is not immediate. However, if you would like to carry out an experiment with the Co-Creation Stage in a real event, do not hesitate to contact [Vicomtech](https://www.vicomtech.org/) at mzorrilla@vicomtech.org. 
