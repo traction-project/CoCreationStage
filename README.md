@@ -78,7 +78,7 @@ The Co-Creation Stage is composed of many services that use the following ports:
     docker-compose up -d
     ```
 
-    (Optional) In case it is neccessary to stop the services, the commands are the following:
+    (Optional) In case it is necessary to stop the services, the commands are the following:
 
     ```bash
     cd backend
